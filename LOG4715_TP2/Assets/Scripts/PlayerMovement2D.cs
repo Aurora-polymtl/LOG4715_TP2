@@ -9,6 +9,7 @@ public class PlayerMove2D : MonoBehaviour
     private float currentJumpForce;
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_animate;
+    private bool grounded;
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -29,10 +30,26 @@ public class PlayerMove2D : MonoBehaviour
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && grounded)
         {
-            m_Rigidbody2D.linearVelocity = new Vector2(m_Rigidbody2D.linearVelocity.x, m_JumpForce);
+            Jump();
         }
         m_animate.SetBool("run", horizontalInput != 0);
+        m_animate.SetBool("grounded", grounded);
+    }
+
+    private void Jump()
+    {
+        m_Rigidbody2D.linearVelocity = new Vector2(m_Rigidbody2D.linearVelocity.x, m_JumpForce);
+        m_animate.SetTrigger("jump");
+        grounded = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            grounded=true;
+        }
     }
 }
