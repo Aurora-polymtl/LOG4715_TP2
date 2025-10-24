@@ -8,9 +8,11 @@ public class PlayerMove2D : MonoBehaviour
     [SerializeField] private int midair_Jumps = 1;
     private float currentJumpForce;
     private Rigidbody2D m_Rigidbody2D;
+    private Animator m_animate;
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
+        m_animate = GetComponent<Animator>();
     }
     // Update is called once per frame
     private void Update()
@@ -31,5 +33,6 @@ public class PlayerMove2D : MonoBehaviour
         {
             m_Rigidbody2D.linearVelocity = new Vector2(m_Rigidbody2D.linearVelocity.x, m_JumpForce);
         }
+        m_animate.SetBool("run", horizontalInput != 0);
     }
 }
