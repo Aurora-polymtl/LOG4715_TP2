@@ -52,4 +52,9 @@ public class PlayerMove2D : MonoBehaviour
             grounded=true;
         }
     }
+
+    private bool isGrounded()
+    {
+        return false;
+    }
 }
