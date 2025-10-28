@@ -8,7 +8,8 @@ public class PlayerMove2D : MonoBehaviour
     [SerializeField] private int midair_Jumps = 1;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
-    private float currentJumpForce;
+    [SerializeField] private float wallSlideSpeed = 2f;
+    private bool isSlidingOnWall;
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_animate;
     private BoxCollider2D m_Collider;
@@ -23,14 +24,13 @@ public class PlayerMove2D : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
-
         if (horizontalInput > 0.01f)
         {
-            transform.localScale = Vector3.one;
+            transform.localScale = Vector2.one;
         }
         else if (horizontalInput < -0.01f)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector2(-1, 1);
         }
 
         if (Input.GetKey(KeyCode.Space) && isGrounded())
@@ -39,6 +39,8 @@ public class PlayerMove2D : MonoBehaviour
         }
         m_animate.SetBool("run", horizontalInput != 0);
         m_animate.SetBool("grounded", isGrounded());
+
+        isWallSliding();
     }
 
     private void Jump()
@@ -57,5 +59,16 @@ public class PlayerMove2D : MonoBehaviour
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(m_Collider.bounds.center, m_Collider.bounds.size, 0, new Vector2(transform.localScale.x, 0), 0.1f, wallLayer);
         return raycastHit.collider != null;
+    }
+
+    private void isWallSliding()
+    {
+        if(isHittingWall() && !isGrounded()) {
+            isSlidingOnWall = true;
+            m_Rigidbody2D.linearVelocity = new Vector2(m_Rigidbody2D.linearVelocity.x, Mathf.Clamp(m_Rigidbody2D.linearVelocity.y, -wallSlideSpeed, float.MaxValue));
+        } else
+        {
+            isSlidingOnWall = false;
+        }
     }
 }
