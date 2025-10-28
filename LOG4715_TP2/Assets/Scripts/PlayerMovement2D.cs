@@ -43,6 +43,11 @@ public class PlayerMove2D : MonoBehaviour
         m_animate.SetBool("grounded", isGrounded());
 
         isWallSliding();
+
+        if(Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
+        {
+            Jump();
+        }
     }
 
     private void Jump()
