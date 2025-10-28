@@ -23,7 +23,9 @@ public class PlayerMove2D : MonoBehaviour
     private void Update()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-        m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
+        if (!this.isSlidingOnWall) {
+            m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
+        }
         if (horizontalInput > 0.01f)
         {
             transform.localScale = Vector2.one;
