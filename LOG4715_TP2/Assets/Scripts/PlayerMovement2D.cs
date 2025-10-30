@@ -13,16 +13,25 @@ public class PlayerMove2D : MonoBehaviour
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_animate;
     private BoxCollider2D m_Collider;
+    private Stamina playerStamina;
+
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_animate = GetComponent<Animator>();
         m_Collider = GetComponent<BoxCollider2D>();
+        playerStamina = GetComponent<Stamina>();
     }
     // Update is called once per frame
     private void Update()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
+
+        if (isGrounded() && playerStamina.currentStamina < playerStamina.startingStamina)
+        {
+            playerStamina.Regenerate();
+        }
+
         if (!this.isSlidingOnWall) {
             m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
         }
@@ -46,6 +55,7 @@ public class PlayerMove2D : MonoBehaviour
 
         if(Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
         {
+            if (playerStamina.Consume(Stamina.PlayerAction.WallJump))
             Jump();
         }
     }
