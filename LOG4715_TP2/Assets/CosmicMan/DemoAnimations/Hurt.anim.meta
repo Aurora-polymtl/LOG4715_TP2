@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7ea4f65dd26e09c4c829207c2a3f76f3
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 167448
+  packageName: CosmicMan
+  packageVersion: 1.1
+  assetPath: Assets/CosmicMan/DemoAnimations/Hurt.anim
+  uploadId: 378772

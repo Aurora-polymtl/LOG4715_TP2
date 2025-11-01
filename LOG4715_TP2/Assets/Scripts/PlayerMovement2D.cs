@@ -48,6 +48,7 @@ public class PlayerMove2D : MonoBehaviour
         {
             Jump();
         }
+        m_Rigidbody2D.gravityScale = 3;
     }
 
     private void Jump()

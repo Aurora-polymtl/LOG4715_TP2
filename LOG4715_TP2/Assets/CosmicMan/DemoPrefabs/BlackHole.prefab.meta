@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 44656a7a45eb7b149ad359bbf5c8ed3f
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 167448
+  packageName: CosmicMan
+  packageVersion: 1.1
+  assetPath: Assets/CosmicMan/DemoPrefabs/BlackHole.prefab
+  uploadId: 378772
