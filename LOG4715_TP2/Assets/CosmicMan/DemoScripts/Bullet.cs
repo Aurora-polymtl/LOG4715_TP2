@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
 
 	private void OnBecameVisible()
 	{
-		rigidbody2d.velocity = transform.right * bulletSpeed;
+		rigidbody2d.linearVelocity = transform.right * bulletSpeed;
 	}
 
 	private void OnBecameInvisible()
