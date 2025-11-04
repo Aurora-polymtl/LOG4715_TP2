@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
 			if (Input.GetAxisRaw("Horizontal") > 0f)
 			{
 				// Moving Forward
-				playerRigidbody.velocity = new Vector3(playerSpeed, playerRigidbody.velocity.y, 0f);
+				playerRigidbody.linearVelocity = new Vector3(playerSpeed, playerRigidbody.linearVelocity.y, 0f);
 
 				// Flip Sprite on X axis
 				if (!facingRight)
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 			else if (Input.GetAxisRaw("Horizontal") < 0f)
 			{
 				// Moving Forward
-				playerRigidbody.velocity = new Vector3(-playerSpeed, playerRigidbody.velocity.y, 0f);
+				playerRigidbody.linearVelocity = new Vector3(-playerSpeed, playerRigidbody.linearVelocity.y, 0f);
 
 				// Flip Sprite on X axis
 				if (facingRight)
@@ -90,14 +90,14 @@ public class PlayerController : MonoBehaviour
 			}
 			else
 			{
-				playerRigidbody.velocity = new Vector3(0f, playerRigidbody.velocity.y, 0f);
+				playerRigidbody.linearVelocity = new Vector3(0f, playerRigidbody.linearVelocity.y, 0f);
 			}
 			#endregion
 
 			#region Vertical Movement (Jump)
 			if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.Space)) && isPlayerOnGround)
 			{
-				playerRigidbody.velocity = new Vector3(playerRigidbody.velocity.x, jumpingSpeed, 0f);
+				playerRigidbody.linearVelocity = new Vector3(playerRigidbody.linearVelocity.x, jumpingSpeed, 0f);
 			}
 			#endregion
 		}
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
 		// Always checking if player on Ground or not
 		playerAnimator.SetBool(onGroundID, isPlayerOnGround);
 		// Always setting the Player Speed to the Animator - Idle if Horizontal PlayerSpeed < 0.05f
-		playerAnimator.SetFloat(playerSpeedID, Mathf.Abs(playerRigidbody.velocity.x));
+		playerAnimator.SetFloat(playerSpeedID, Mathf.Abs(playerRigidbody.linearVelocity.x));
 		// Always setting the Player as NOT Shooting unless the player is shooting
 		if (vShootingCounter <= 0f)
 		{
@@ -125,7 +125,7 @@ public class PlayerController : MonoBehaviour
 		#region Teleport
 		if (Input.GetKeyDown(KeyCode.T) && isPlayerOnGround)
 		{
-			if (Mathf.Abs(playerRigidbody.velocity.x) < 0.05f)
+			if (Mathf.Abs(playerRigidbody.linearVelocity.x) < 0.05f)
 				playerAnimator.SetTrigger(teleporID);
 		}
 		#endregion
@@ -134,9 +134,9 @@ public class PlayerController : MonoBehaviour
 		else if (Input.GetKeyDown(KeyCode.H))
 		{
 			playerAnimator.SetTrigger(hurtID);
-			if (Mathf.Abs(playerRigidbody.velocity.x) != 0.05f)
+			if (Mathf.Abs(playerRigidbody.linearVelocity.x) != 0.05f)
 			{
-				playerRigidbody.velocity = new Vector3(0f, playerRigidbody.velocity.y, 0f);
+				playerRigidbody.linearVelocity = new Vector3(0f, playerRigidbody.linearVelocity.y, 0f);
 				vHurtCounter = hurtCounter;
 			}
 		}
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
 			if (isPlayerOnGround)
 			{
 				shootingPoint.position = new Vector3(shootingPoint.position.x, transform.position.y - 0.04f, shootingPoint.position.z);
-				if (Math.Abs(playerRigidbody.velocity.x) < 0.05f)
+				if (Math.Abs(playerRigidbody.linearVelocity.x) < 0.05f)
 				{
 					playerAnimator.SetTrigger(shootingID);
 				}
@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
 		#region Skill Attack - Black Hole
 		else if (Input.GetKeyDown(KeyCode.S))
 		{
-			if (isPlayerOnGround && Math.Abs(playerRigidbody.velocity.x) == 0f && Math.Abs(playerRigidbody.velocity.y) == 0f)
+			if (isPlayerOnGround && Math.Abs(playerRigidbody.linearVelocity.x) == 0f && Math.Abs(playerRigidbody.linearVelocity.y) == 0f)
 			{
 				if (!blackHoleObject.activeSelf)
 				{

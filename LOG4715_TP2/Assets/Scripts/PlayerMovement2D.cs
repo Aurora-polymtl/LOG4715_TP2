@@ -77,6 +77,7 @@ public class PlayerMove2D : MonoBehaviour
 
     private IEnumerator Dash()
     {
+        Physics2D.IgnoreLayerCollision(10, 9, true);
         canDash = false;
         isDashing = true;
         float originalGravity = m_Rigidbody2D.gravityScale;
@@ -85,6 +86,8 @@ public class PlayerMove2D : MonoBehaviour
         yield return new WaitForSeconds(dashingTime);
         m_Rigidbody2D.gravityScale = originalGravity;
         isDashing = false;
+        Physics2D.IgnoreLayerCollision(10, 9, false);
+
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
 
