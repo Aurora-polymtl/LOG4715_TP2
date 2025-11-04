@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8da858301278c9e4d9bae724a7747cea
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 167448
+  packageName: CosmicMan
+  packageVersion: 1.1
+  assetPath: Assets/CosmicMan/DemoScripts/BulletPool.cs
+  uploadId: 378772
