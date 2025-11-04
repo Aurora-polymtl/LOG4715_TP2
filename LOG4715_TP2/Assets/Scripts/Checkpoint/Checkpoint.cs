@@ -3,6 +3,9 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     public BoxCollider2D trigger;
+    public SpriteRenderer flagRenderer;
+    public Sprite activatedSprite;
+    public ParticleSystem flagParticles;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -10,6 +13,9 @@ public class Checkpoint : MonoBehaviour
         {
             RespawnController.instance.respawnPoint = transform;
             trigger.enabled = false;
+            flagRenderer.sprite = activatedSprite;
+            flagParticles.Play();
+
         }
     }
 }
