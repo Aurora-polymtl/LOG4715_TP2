@@ -47,12 +47,24 @@ public class MovingPlatform : MonoBehaviour
     }
 
     // --- Gestion du joueur sur la plateforme ---
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // Le joueur devient enfant de la plateforme => suit le mouvement
-            collision.transform.SetParent(transform);
+            PlayerMove2D player = collision.gameObject.GetComponent<PlayerMove2D>();
+            if (player != null)
+            {
+                if (player.IsPlayerIdle())
+                {
+                    if (collision.transform.parent != transform)
+                        collision.transform.SetParent(transform);
+                }
+                else
+                {
+                    if (collision.transform.parent == transform)
+                        collision.transform.SetParent(null);
+                }
+            }
         }
     }
 

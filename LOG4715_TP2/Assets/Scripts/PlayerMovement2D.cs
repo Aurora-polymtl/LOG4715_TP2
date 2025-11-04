@@ -101,4 +101,10 @@ public class PlayerMove2D : MonoBehaviour
             isPushing = false;
         }
     }
+    public bool IsPlayerIdle()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        return Mathf.Abs(horizontalInput) < 0.01f && isGrounded();
+    }
+
 }
