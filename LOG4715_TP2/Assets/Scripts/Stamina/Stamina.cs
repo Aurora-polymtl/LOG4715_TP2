@@ -16,9 +16,9 @@ public class Stamina : MonoBehaviour
 
     public Dictionary<PlayerAction, float> staminaCosts = new Dictionary<PlayerAction, float>
     {
-        { PlayerAction.WallJump, 0.25f },
+        { PlayerAction.WallJump, 0.22f },
         { PlayerAction.Dash, 0.10f },
-        { PlayerAction.PushObjet, 0.20f}
+        { PlayerAction.PushObjet, 0.05f}
     };
 
     private void Awake()
