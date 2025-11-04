@@ -1322,6 +1322,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trigger: {fileID: 1206567813}
+  flagRenderer: {fileID: 1206567810}
+  activatedSprite: {fileID: 8461808629547038638, guid: 72344fb2a7e4a724d87411bdda2a2e51, type: 3}
 --- !u!61 &1206567813
 BoxCollider2D:
   m_ObjectHideFlags: 0
