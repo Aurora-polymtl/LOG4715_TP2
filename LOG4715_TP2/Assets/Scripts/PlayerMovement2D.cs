@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMove2D : MonoBehaviour
 {
@@ -8,11 +8,13 @@ public class PlayerMove2D : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float wallSlideSpeed = 2f;
+    private Rigidbody2D pushingRb;
     private bool isSlidingOnWall;
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_animate;
     private BoxCollider2D m_Collider;
     private Stamina playerStamina;
+    private bool isPushing;
 
     private void Awake()
     {
@@ -29,6 +31,15 @@ public class PlayerMove2D : MonoBehaviour
         if (isGrounded() && playerStamina.currentStamina < playerStamina.startingStamina)
         {
             playerStamina.Regenerate();
+        }
+
+        if (isPushing && Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f && pushingRb != null)
+        {
+            float dir = Mathf.Sign(Input.GetAxis("Horizontal"));
+            float objVxAlongPush = pushingRb.linearVelocity.x * dir;
+
+            if (objVxAlongPush > 0.01f)
+                playerStamina.Consume(Stamina.PlayerAction.PushObjet);
         }
 
         if (!this.isSlidingOnWall) {
@@ -86,6 +97,34 @@ public class PlayerMove2D : MonoBehaviour
         } else
         {
             isSlidingOnWall = false;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D col)
+    {
+        var rb = col.rigidbody;
+        if (rb == null || rb.bodyType != RigidbodyType2D.Dynamic) return;
+
+        Vector2 normal = col.GetContact(0).normal;
+
+        if (Mathf.Abs(normal.x) > Mathf.Abs(normal.y))
+        {
+            isPushing = true;
+            pushingRb = rb;
+        }
+        else
+        {
+            isPushing = false;
+            pushingRb = null;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.rigidbody == pushingRb)
+        {
+            isPushing = false;
+            pushingRb = null;
         }
     }
 }
