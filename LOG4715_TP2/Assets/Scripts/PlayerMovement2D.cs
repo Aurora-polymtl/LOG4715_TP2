@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMove2D : MonoBehaviour
@@ -13,17 +14,30 @@ public class PlayerMove2D : MonoBehaviour
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_animate;
     private BoxCollider2D m_Collider;
+    private bool canDash;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
+
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_animate = GetComponent<Animator>();
         m_Collider = GetComponent<BoxCollider2D>();
+        // allow dashing when the game starts
+        canDash = true;
     }
     // Update is called once per frame
     private void Update()
     {
+        if (isDashing)
+        {
+            return;
+        }
         float horizontalInput = Input.GetAxis("Horizontal");
-        if (!this.isSlidingOnWall) {
+        if (!this.isSlidingOnWall)
+        {
             m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
         }
         if (horizontalInput > 0.01f)
@@ -44,9 +58,14 @@ public class PlayerMove2D : MonoBehaviour
 
         isWallSliding();
 
-        if(Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
+        if (Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
         {
             Jump();
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
         }
     }
 
@@ -56,6 +75,20 @@ public class PlayerMove2D : MonoBehaviour
         m_animate.SetTrigger("jump");
     }
 
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = m_Rigidbody2D.gravityScale;
+        m_Rigidbody2D.gravityScale = 0f;
+        m_Rigidbody2D.linearVelocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        yield return new WaitForSeconds(dashingTime);
+        m_Rigidbody2D.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+
+    }
     private bool isGrounded()
     {
         RaycastHit2D raycastHit = Physics2D.BoxCast(m_Collider.bounds.center, m_Collider.bounds.size, 0, Vector2.down, 0.1f, groundLayer);
@@ -70,10 +103,12 @@ public class PlayerMove2D : MonoBehaviour
 
     private void isWallSliding()
     {
-        if(isHittingWall() && !isGrounded()) {
+        if (isHittingWall() && !isGrounded())
+        {
             isSlidingOnWall = true;
             m_Rigidbody2D.linearVelocity = new Vector2(m_Rigidbody2D.linearVelocity.x, Mathf.Clamp(m_Rigidbody2D.linearVelocity.y, -wallSlideSpeed, float.MaxValue));
-        } else
+        }
+        else
         {
             isSlidingOnWall = false;
         }
