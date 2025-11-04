@@ -9,6 +9,7 @@ public class PlayerMove2D : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float wallSlideSpeed = 2f;
+    private Rigidbody2D pushingRb;
     private bool isSlidingOnWall;
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_animate;
@@ -18,6 +19,8 @@ public class PlayerMove2D : MonoBehaviour
     private float dashingPower = 24f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
+    private Stamina playerStamina;
+    private bool isPushing;
 
     private void Awake()
     {
@@ -26,6 +29,7 @@ public class PlayerMove2D : MonoBehaviour
         m_Collider = GetComponent<BoxCollider2D>();
         // allow dashing when the game starts
         canDash = true;
+        playerStamina = GetComponent<Stamina>();
     }
     // Update is called once per frame
     private void Update()
@@ -35,6 +39,21 @@ public class PlayerMove2D : MonoBehaviour
             return;
         }
         float horizontalInput = Input.GetAxis("Horizontal");
+
+        if (isGrounded() && playerStamina.currentStamina < playerStamina.startingStamina)
+        {
+            playerStamina.Regenerate();
+        }
+
+        if (isPushing && Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f && pushingRb != null)
+        {
+            float dir = Mathf.Sign(Input.GetAxis("Horizontal"));
+            float objVxAlongPush = pushingRb.linearVelocity.x * dir;
+
+            if (objVxAlongPush > 0.01f)
+                playerStamina.Consume(Stamina.PlayerAction.PushObjet);
+        }
+
         if (!this.isSlidingOnWall)
         {
             m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
@@ -59,7 +78,8 @@ public class PlayerMove2D : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
         {
-            Jump();
+            if (playerStamina.Consume(Stamina.PlayerAction.WallJump))
+                Jump();
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
@@ -114,6 +134,34 @@ public class PlayerMove2D : MonoBehaviour
         else
         {
             isSlidingOnWall = false;
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D col)
+    {
+        var rb = col.rigidbody;
+        if (rb == null || rb.bodyType != RigidbodyType2D.Dynamic) return;
+
+        Vector2 normal = col.GetContact(0).normal;
+
+        if (Mathf.Abs(normal.x) > Mathf.Abs(normal.y))
+        {
+            isPushing = true;
+            pushingRb = rb;
+        }
+        else
+        {
+            isPushing = false;
+            pushingRb = null;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D col)
+    {
+        if (col.rigidbody == pushingRb)
+        {
+            isPushing = false;
+            pushingRb = null;
         }
     }
 }
