@@ -4,11 +4,14 @@ public class PlayerMove2D : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private float m_MaxSpeed = 10f;
+    [SerializeField] private float m_PushSpeed = 5f;
     [SerializeField] private float m_JumpForce = 10f;                  // Amount of force added when the player jumps.
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float wallSlideSpeed = 2f;
     private bool isSlidingOnWall;
+    private bool isPushing = false;
+    private bool nearPushable = false;
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_animate;
     private BoxCollider2D m_Collider;
@@ -22,8 +25,9 @@ public class PlayerMove2D : MonoBehaviour
     private void Update()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
+        float currentSpeed = (isPushing ? m_PushSpeed : m_MaxSpeed);
         if (!this.isSlidingOnWall) {
-            m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
+            m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * currentSpeed, m_Rigidbody2D.linearVelocity.y);
         }
         if (horizontalInput > 0.01f)
         {
@@ -40,6 +44,9 @@ public class PlayerMove2D : MonoBehaviour
         }
         m_animate.SetBool("run", horizontalInput != 0);
         m_animate.SetBool("grounded", isGrounded());
+
+        isPushing = nearPushable && Mathf.Abs(horizontalInput) > 0.01f && isGrounded();
+        m_animate.SetBool("push", isPushing);
 
         isWallSliding();
 
@@ -76,6 +83,22 @@ public class PlayerMove2D : MonoBehaviour
         } else
         {
             isSlidingOnWall = false;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("pushable"))
+        {
+            nearPushable = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("pushable"))
+        {
+            nearPushable = false;
+            isPushing = false;
         }
     }
 }
