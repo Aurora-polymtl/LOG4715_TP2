@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Ground
   - Enemy
-  - pushable
+  - Pushable
   layers:
   - Default
   - TransparentFX
@@ -44,17 +44,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: background
-    uniqueID: 1893446991
+  - name: Props
+    uniqueID: 1618746415
     locked: 0
-  - name: walls
-    uniqueID: 4143653735
+  - name: Player
+    uniqueID: 19851533
     locked: 0
-  - name: ground
-    uniqueID: 4286444459
-    locked: 0
-  - name: objects
-    uniqueID: 3952505853
+  - name: Background
+    uniqueID: 2054191183
     locked: 0
   m_RenderingLayers:
   - Default
