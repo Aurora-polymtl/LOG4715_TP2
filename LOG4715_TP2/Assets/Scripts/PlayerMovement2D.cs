@@ -14,6 +14,7 @@ public class PlayerMove2D : MonoBehaviour
     private Animator m_animate;
     private BoxCollider2D m_Collider;
     private Stamina playerStamina;
+    private Speed playerSpeed;
     private bool isPushing;
     private float playerInitialMass;
 
@@ -23,6 +24,7 @@ public class PlayerMove2D : MonoBehaviour
         m_animate = GetComponent<Animator>();
         m_Collider = GetComponent<BoxCollider2D>();
         playerStamina = GetComponent<Stamina>();
+        playerSpeed = GetComponent<Speed>();
         playerInitialMass = m_Rigidbody2D.mass;
     }
     // Update is called once per frame
@@ -56,7 +58,9 @@ public class PlayerMove2D : MonoBehaviour
         }
 
         if (!this.isSlidingOnWall) {
-            m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
+            float moveSpeed = m_MaxSpeed;
+            if (playerSpeed.currentSpeed > 0f) moveSpeed *= 2f;
+            m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * moveSpeed, m_Rigidbody2D.linearVelocity.y);
         }
         if (horizontalInput > 0.01f)
         {
@@ -137,6 +141,15 @@ public class PlayerMove2D : MonoBehaviour
         {
             isPushing = false;
             pushingRb = null;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D powerUp)
+    {
+        if (powerUp.CompareTag("PowerUp"))
+        {
+            playerSpeed.AddFragment();
+            Destroy(powerUp.gameObject);
         }
     }
 }
