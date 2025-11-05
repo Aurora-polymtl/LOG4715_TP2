@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PlayerMove2D : MonoBehaviour
 {
@@ -85,6 +85,7 @@ public class PlayerMove2D : MonoBehaviour
             if (playerStamina.Consume(Stamina.PlayerAction.WallJump)) Jump();
         }
         m_Rigidbody2D.gravityScale = 3;
+
     }
 
     private void Jump()
@@ -151,5 +152,11 @@ public class PlayerMove2D : MonoBehaviour
             playerSpeed.AddFragment();
             Destroy(powerUp.gameObject);
         }
+    }
+
+    public bool IsPlayerIdle()
+    {
+        float horizontalInput = Input.GetAxis("Horizontal");
+        return Mathf.Abs(horizontalInput) < 0.01f && isGrounded();
     }
 }
