@@ -24,11 +24,11 @@ public class Health : MonoBehaviour
             m_animate.SetTrigger("hurt");
             if (hitSide == -1)
             {
-                knockback.CallKnockback(new Vector2(hitSide, 0f), new Vector2(-1, 0.1f), Input.GetAxis("Horizontal"));
+                knockback.CallKnockback(new Vector2(hitSide, 0f), new Vector2(-1, 0.1f));
             }
             else
             {
-                knockback.CallKnockback(new Vector2(hitSide, 0f), new Vector2(1, 0.1f), Input.GetAxis("Horizontal"));
+                knockback.CallKnockback(new Vector2(hitSide, 0f), new Vector2(1, 0.1f));
             }
         }
         else
