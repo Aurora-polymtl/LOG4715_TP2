@@ -6061,6 +6061,8 @@ GameObject:
   - component: {fileID: 825135856}
   - component: {fileID: 825135855}
   - component: {fileID: 825135861}
+  - component: {fileID: 825135863}
+  - component: {fileID: 825135862}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -6267,6 +6269,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   regenerationPerSecond: 5
+--- !u!114 &825135862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825135854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b5c1abad0cecea42af9670f032e47c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthStart: 0
+--- !u!114 &825135863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 825135854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99fbc273645efdb49a3d201147eff3ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingSpeed: 10
+  consumptionPerSecond: 5
+  speedBar: {fileID: 0}
+  nSpeedPowerUpPickedUp: 0
 --- !u!1 &830528063
 GameObject:
   m_ObjectHideFlags: 0
@@ -6370,7 +6401,6 @@ GameObject:
   - component: {fileID: 1097329286}
   - component: {fileID: 1097329289}
   - component: {fileID: 1097329288}
-  - component: {fileID: 1097329287}
   m_Layer: 5
   m_Name: StaminaBarCurrent
   m_TagString: Untagged
@@ -6397,18 +6427,6 @@ RectTransform:
   m_AnchoredPosition: {x: -881, y: 445}
   m_SizeDelta: {x: 234.0512, y: 104.523}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1097329287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1097329285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3efb8ceb9f954fa49badecf370130533, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1097329288
 MonoBehaviour:
   m_ObjectHideFlags: 0

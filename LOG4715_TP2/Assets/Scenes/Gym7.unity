@@ -3986,7 +3986,6 @@ GameObject:
   - component: {fileID: 1671903194}
   - component: {fileID: 1671903197}
   - component: {fileID: 1671903196}
-  - component: {fileID: 1671903195}
   m_Layer: 5
   m_Name: StaminaBarCurrent
   m_TagString: Untagged
@@ -4013,18 +4012,6 @@ RectTransform:
   m_AnchoredPosition: {x: -881, y: 445}
   m_SizeDelta: {x: 234.0512, y: 104.523}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1671903195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671903193}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3efb8ceb9f954fa49badecf370130533, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1671903196
 MonoBehaviour:
   m_ObjectHideFlags: 0
