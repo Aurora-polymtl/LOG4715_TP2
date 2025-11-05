@@ -38,6 +38,7 @@ public class PlayerMove2D : MonoBehaviour
 
         if (isPushing && Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f && pushingRb != null)
         {
+            m_animate.SetBool("pushing", true);
             float dir = Mathf.Sign(Input.GetAxis("Horizontal"));
             float objVxAlongPush = pushingRb.linearVelocity.x * dir;
 
@@ -45,9 +46,13 @@ public class PlayerMove2D : MonoBehaviour
             {
                 if (!playerStamina.Consume(Stamina.PlayerAction.PushObjet))
                 {
+                    m_animate.SetBool("pushing", false);
                     m_Rigidbody2D.mass = 0.01f;
                 }
             }
+        } else
+        {
+            m_animate.SetBool("pushing", false);
         }
 
         if (!this.isSlidingOnWall) {
