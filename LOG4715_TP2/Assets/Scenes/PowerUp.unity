@@ -780,8 +780,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99fbc273645efdb49a3d201147eff3ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingSpeed: 50
+  startingSpeed: 20
   consumptionPerSecond: 5
+  speedBar: {fileID: 132956625}
   nSpeedPowerUpPickedUp: 0
 --- !u!1 &853603091
 GameObject:
