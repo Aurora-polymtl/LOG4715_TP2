@@ -6,9 +6,11 @@ public class EnemyDamage : MonoBehaviour
     [SerializeField] private float damage;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        if (collision.tag == "Player")
         {
-            collision.GetComponent<Health>().TakingDamage(damage);
+            float dx = collision.transform.position.x - transform.position.x;
+            int hitSide = dx == 0 ? 0 : (dx > 0 ? 1 : -1);
+            collision.GetComponent<Health>().TakingDamage(damage, hitSide);
         }
     }
 }

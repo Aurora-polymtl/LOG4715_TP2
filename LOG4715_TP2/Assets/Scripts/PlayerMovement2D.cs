@@ -21,6 +21,7 @@ public class PlayerMove2D : MonoBehaviour
     private float dashingCooldown = 1f;
     private Stamina playerStamina;
     private bool isPushing;
+    private Knockback knockback;
 
     private void Awake()
     {
@@ -30,6 +31,7 @@ public class PlayerMove2D : MonoBehaviour
         // allow dashing when the game starts
         canDash = true;
         playerStamina = GetComponent<Stamina>();
+        knockback = GetComponent<Knockback>();
     }
     // Update is called once per frame
     private void Update()
@@ -54,24 +56,29 @@ public class PlayerMove2D : MonoBehaviour
                 playerStamina.Consume(Stamina.PlayerAction.PushObjet);
         }
 
-        if (!this.isSlidingOnWall)
+        if (!knockback.IsBeingKnockedBack)
         {
-            m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
-        }
-        if (horizontalInput > 0.01f)
-        {
-            transform.localScale = Vector2.one;
-        }
-        else if (horizontalInput < -0.01f)
-        {
-            transform.localScale = new Vector2(-1, 1);
+            if (!this.isSlidingOnWall)
+            {
+                m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
+            }
+            if (horizontalInput > 0.01f)
+            {
+                transform.localScale = Vector2.one;
+            }
+            else if (horizontalInput < -0.01f)
+            {
+                transform.localScale = new Vector2(-1, 1);
+            }
+
+            if (Input.GetKey(KeyCode.Space) && isGrounded())
+            {
+                Jump();
+            }
+
+            m_animate.SetBool("run", horizontalInput != 0);
         }
 
-        if (Input.GetKey(KeyCode.Space) && isGrounded())
-        {
-            Jump();
-        }
-        m_animate.SetBool("run", horizontalInput != 0);
         m_animate.SetBool("grounded", isGrounded());
 
         isWallSliding();
