@@ -4,7 +4,6 @@ public class PlayerMove2D : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private float m_MaxSpeed = 10f;
-    [SerializeField] private float m_PushSpeed = 5f;
     [SerializeField] private float m_JumpForce = 10f;                  // Amount of force added when the player jumps.
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
@@ -15,8 +14,7 @@ public class PlayerMove2D : MonoBehaviour
     private Animator m_animate;
     private BoxCollider2D m_Collider;
     private Stamina playerStamina;
-    private bool isPushing = false;
-    private bool nearPushable = false;
+    private bool isPushing;
     private float playerInitialMass;
 
     private void Awake()
@@ -31,7 +29,6 @@ public class PlayerMove2D : MonoBehaviour
     private void Update()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
-        float currentSpeed = (isPushing ? m_PushSpeed : m_MaxSpeed);
 
         if (isGrounded() && playerStamina.currentStamina < playerStamina.startingStamina)
         {
@@ -53,8 +50,9 @@ public class PlayerMove2D : MonoBehaviour
             }
         }
 
-        if (!this.isSlidingOnWall) {
-            m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * currentSpeed, m_Rigidbody2D.linearVelocity.y);
+        if (!this.isSlidingOnWall)
+        {
+            m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
         }
         if (horizontalInput > 0.01f)
         {
@@ -72,12 +70,9 @@ public class PlayerMove2D : MonoBehaviour
         m_animate.SetBool("run", horizontalInput != 0);
         m_animate.SetBool("grounded", isGrounded());
 
-        isPushing = nearPushable && Mathf.Abs(horizontalInput) > 0.01f && isGrounded();
-        m_animate.SetBool("push", isPushing);
-
         isWallSliding();
 
-        if(Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
+        if (Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
         {
             if (playerStamina.Consume(Stamina.PlayerAction.WallJump)) Jump();
         }
@@ -104,31 +99,45 @@ public class PlayerMove2D : MonoBehaviour
 
     private void isWallSliding()
     {
-        if(isHittingWall() && !isGrounded()) {
+        if (isHittingWall() && !isGrounded())
+        {
             isSlidingOnWall = true;
             m_Rigidbody2D.linearVelocity = new Vector2(m_Rigidbody2D.linearVelocity.x, Mathf.Clamp(m_Rigidbody2D.linearVelocity.y, -wallSlideSpeed, float.MaxValue));
-        } else
+        }
+        else
         {
             isSlidingOnWall = false;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D col)
     {
-        if (collision.gameObject.CompareTag("pushable"))
+        var rb = col.rigidbody;
+        if (rb == null || rb.bodyType != RigidbodyType2D.Dynamic) return;
+
+        Vector2 normal = col.GetContact(0).normal;
+
+        if (Mathf.Abs(normal.x) > Mathf.Abs(normal.y))
         {
-            nearPushable = true;
+            isPushing = true;
+            pushingRb = rb;
+        }
+        else
+        {
+            isPushing = false;
+            pushingRb = null;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnCollisionExit2D(Collision2D col)
     {
-        if (collision.gameObject.CompareTag("pushable"))
+        if (col.rigidbody == pushingRb)
         {
-            nearPushable = false;
             isPushing = false;
+            pushingRb = null;
         }
     }
+
     public bool IsPlayerIdle()
     {
         float horizontalInput = Input.GetAxis("Horizontal");
