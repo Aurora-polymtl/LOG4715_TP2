@@ -309,7 +309,6 @@ GameObject:
   - component: {fileID: 502380092}
   - component: {fileID: 502380095}
   - component: {fileID: 502380094}
-  - component: {fileID: 502380093}
   m_Layer: 5
   m_Name: StaminaBarCurrent
   m_TagString: Untagged
@@ -336,18 +335,6 @@ RectTransform:
   m_AnchoredPosition: {x: -741, y: 445}
   m_SizeDelta: {x: 234.0512, y: 104.523}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &502380093
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 502380091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3efb8ceb9f954fa49badecf370130533, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &502380094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,7 +483,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -78, y: 115}
+  m_AnchoredPosition: {x: -143, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &609367197
@@ -2342,6 +2329,7 @@ GameObject:
   - component: {fileID: 1166741924}
   - component: {fileID: 1166741923}
   - component: {fileID: 1166741931}
+  - component: {fileID: 1166741932}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -2577,6 +2565,22 @@ MonoBehaviour:
   hitDirectionForce: 1
   constForce: 5
   inputForce: 7.5
+--- !u!114 &1166741932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166741922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99fbc273645efdb49a3d201147eff3ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingSpeed: 10
+  consumptionPerSecond: 5
+  speedBar: {fileID: 0}
+  nSpeedPowerUpPickedUp: 0
 --- !u!1 &1633680466
 GameObject:
   m_ObjectHideFlags: 0
@@ -2603,7 +2607,7 @@ RectTransform:
   m_GameObject: {fileID: 1633680466}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.35, y: 1.35, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 579812942}
@@ -2612,7 +2616,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -78, y: -48}
+  m_AnchoredPosition: {x: 117, y: -343}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1633680468
