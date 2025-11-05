@@ -38,6 +38,7 @@ public class PlayerMove2D : MonoBehaviour
 
         if (isPushing && Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f && pushingRb != null)
         {
+            m_animate.SetBool("pushing", true);
             float dir = Mathf.Sign(Input.GetAxis("Horizontal"));
             float objVxAlongPush = pushingRb.linearVelocity.x * dir;
 
@@ -45,13 +46,16 @@ public class PlayerMove2D : MonoBehaviour
             {
                 if (!playerStamina.Consume(Stamina.PlayerAction.PushObjet))
                 {
+                    m_animate.SetBool("pushing", false);
                     m_Rigidbody2D.mass = 0.01f;
                 }
             }
+        } else
+        {
+            m_animate.SetBool("pushing", false);
         }
 
-        if (!this.isSlidingOnWall)
-        {
+        if (!this.isSlidingOnWall) {
             m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * m_MaxSpeed, m_Rigidbody2D.linearVelocity.y);
         }
         if (horizontalInput > 0.01f)
@@ -72,7 +76,7 @@ public class PlayerMove2D : MonoBehaviour
 
         isWallSliding();
 
-        if (Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
+        if(Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
         {
             if (playerStamina.Consume(Stamina.PlayerAction.WallJump)) Jump();
         }
@@ -99,12 +103,10 @@ public class PlayerMove2D : MonoBehaviour
 
     private void isWallSliding()
     {
-        if (isHittingWall() && !isGrounded())
-        {
+        if(isHittingWall() && !isGrounded()) {
             isSlidingOnWall = true;
             m_Rigidbody2D.linearVelocity = new Vector2(m_Rigidbody2D.linearVelocity.x, Mathf.Clamp(m_Rigidbody2D.linearVelocity.y, -wallSlideSpeed, float.MaxValue));
-        }
-        else
+        } else
         {
             isSlidingOnWall = false;
         }
