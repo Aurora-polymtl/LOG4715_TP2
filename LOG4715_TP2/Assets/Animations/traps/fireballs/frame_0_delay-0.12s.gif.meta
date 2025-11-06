@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6427c91a91264584f8c14db2f1a8f50c
+guid: 2fd433f8c1f3d8f4291fb9cf294017c5
 TextureImporter:
   internalIDToNameTable:
-    - first:
-        213: 4606908045521496030
-      second: Heart_0
+  - first:
+      213: 681424855095378177
+    second: frame_0_delay-0.12s_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -50,9 +50,9 @@ TextureImporter:
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
-  spritePivot: { x: 0.5, y: 0.5 }
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: { x: 0, y: 0, z: 0, w: 0 }
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -70,74 +70,74 @@ TextureImporter:
   swizzle: 50462976
   cookieLightType: 0
   platformSettings:
-    - serializedVersion: 4
-      buildTarget: DefaultTexturePlatform
-      maxTextureSize: 2048
-      resizeAlgorithm: 0
-      textureFormat: -1
-      textureCompression: 1
-      compressionQuality: 50
-      crunchedCompression: 0
-      allowsAlphaSplitting: 0
-      overridden: 0
-      ignorePlatformSupport: 0
-      androidETC2FallbackOverride: 0
-      forceMaximumCompressionQuality_BC6H_BC7: 0
-    - serializedVersion: 4
-      buildTarget: Standalone
-      maxTextureSize: 2048
-      resizeAlgorithm: 0
-      textureFormat: -1
-      textureCompression: 1
-      compressionQuality: 50
-      crunchedCompression: 0
-      allowsAlphaSplitting: 0
-      overridden: 0
-      ignorePlatformSupport: 0
-      androidETC2FallbackOverride: 0
-      forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
-      - serializedVersion: 2
-        name: Heart_0
-        rect:
-          serializedVersion: 2
-          x: 4
-          y: 4
-          width: 120
-          height: 120
-        alignment: 0
-        pivot: { x: 0, y: 0 }
-        border: { x: 0, y: 0, z: 0, w: 0 }
-        customData:
-        outline: []
-        physicsShape: []
-        tessellationDetail: -1
-        bones: []
-        spriteID: ed7a23e75760fef30800000000000000
-        internalID: 4606908045521496030
-        vertices: []
-        indices:
-        edges: []
-        weights: []
+    - serializedVersion: 2
+      name: frame_0_delay-0.12s_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 101051d9b48e47900800000000000000
+      internalID: 681424855095378177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
-    customData:
+    customData: 
     physicsShape: []
     bones: []
-    spriteID:
+    spriteID: 
     internalID: 0
     vertices: []
-    indices:
+    indices: 
     edges: []
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Heart_0: 4606908045521496030
-  mipmapLimitGroupName:
+      frame_0_delay-0.12s_0: 681424855095378177
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  userData:
-  assetBundleName:
-  assetBundleVariant:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

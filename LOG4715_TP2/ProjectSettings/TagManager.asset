@@ -18,8 +18,8 @@ TagManager:
   - Ground
   - Wall
   - Enemy
-  - 
-  - 
+  - fireball
+  - player
   - 
   - 
   - 
@@ -45,14 +45,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Props
-    uniqueID: 1618746415
+  - name: Fireball
+    uniqueID: 3475140429
     locked: 0
   - name: Player
-    uniqueID: 19851533
-    locked: 0
-  - name: Background
-    uniqueID: 2054191183
+    uniqueID: 489070299
     locked: 0
   m_RenderingLayers:
   - Default

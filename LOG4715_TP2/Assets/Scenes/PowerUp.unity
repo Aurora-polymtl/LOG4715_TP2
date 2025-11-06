@@ -549,6 +549,7 @@ GameObject:
   - component: {fileID: 813713022}
   - component: {fileID: 813713029}
   - component: {fileID: 813713030}
+  - component: {fileID: 813713031}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -784,6 +785,21 @@ MonoBehaviour:
   consumptionPerSecond: 5
   speedBar: {fileID: 132956625}
   nSpeedPowerUpPickedUp: 0
+--- !u!114 &813713031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813713021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4cb1b5922d478e4fa69f124675c89a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.18
+  horizontalSpeed: 6
+  upwardImpulse: 2.5
 --- !u!1 &853603091
 GameObject:
   m_ObjectHideFlags: 0
