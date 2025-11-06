@@ -6,8 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/Menu.unity
+    guid: 0c230ae0ddb724a499bf67d058282a4b
+  - enabled: 1
+    path: Assets/Scenes/Gym1.unity
+    guid: 49dd7282dbfc80a409d263db4e83dd0f
+  - enabled: 1
+    path: Assets/Scenes/Gym2.unity
+    guid: 029caebb618da45489c86422ee086111
+  - enabled: 1
+    path: Assets/Scenes/Gym3.unity
+    guid: b3109f06f51cb6046b6614c3efc9525b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
