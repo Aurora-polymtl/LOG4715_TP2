@@ -16,6 +16,14 @@ public class RespawnController : MonoBehaviour
         instance = this;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            collision.transform.position = respawnPoint.position;
+        }
+    }
+
     public void RespawnPlayer()
     {
         var player = GameObject.FindGameObjectWithTag("Player")
