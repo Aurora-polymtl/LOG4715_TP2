@@ -17,20 +17,20 @@ public class EnemyDamage : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
+        var hp = other.GetComponent<Health>();
+        if (hp == null) return;
+
         Vector2 from = self.bounds.center;
         Vector2 to = other.ClosestPoint(from);
         float dx = to.x - from.x;
-
         if (Mathf.Abs(dx) < 0.01f)
         {
             var rb = other.attachedRigidbody;
-            if (rb != null && Mathf.Abs(rb.linearVelocity.x) > 0.01f) dx = rb.linearVelocity.x;
-            else dx = other.bounds.center.x - from.x;
+            dx = (rb != null && Mathf.Abs(rb.linearVelocity.x) > 0.01f) ? rb.linearVelocity.x
+                                                                      : other.bounds.center.x - from.x;
         }
         int hitSide = dx >= 0 ? 1 : -1;
 
-        var hp = other.GetComponent<Health>();
-        if (hp != null)
-            hp.TakingDamage(damage, hitSide, true);
+        hp.TakingDamage(damage, hitSide, applyKnockback: true);
     }
 }

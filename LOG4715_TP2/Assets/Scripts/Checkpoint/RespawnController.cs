@@ -5,16 +5,52 @@ public class RespawnController : MonoBehaviour
     public static RespawnController instance;
     public Transform respawnPoint;
 
-    private void Awake()
+    void Awake()
     {
-       instance = this; 
+        if (instance != null && instance != this)
+        {
+            Debug.LogWarning("[RespawnController] Instance dupliquée détruite.");
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void RespawnPlayer()
     {
-        if (collision.CompareTag("Player"))
+        var player = GameObject.FindGameObjectWithTag("Player")
+                  ?? Object.FindFirstObjectByType<PlayerMove2D>(FindObjectsInactive.Exclude)?.gameObject;
+
+        if (player == null || respawnPoint == null)
         {
-            collision.transform.position = respawnPoint.position;
+            Debug.LogError("[RespawnController] Player ou respawnPoint manquant.");
+            return;
         }
+        RespawnPlayer(player);
+    }
+
+    public void RespawnPlayer(GameObject player)
+    {
+        if (player == null || respawnPoint == null) return;
+
+        var safe = player.GetComponent<PlayerSafeGround>();
+        if (safe != null)
+        {
+            Vector2 target = respawnPoint.position;
+            safe.ForceSetLastSafe(target);
+            safe.TeleportTo(target, ignoreHazard: false);
+            return;
+        }
+
+        // Fallback si pas de PlayerSafeGround
+        var rb = player.GetComponent<Rigidbody2D>();
+        var col = player.GetComponent<Collider2D>();
+        bool prev = col && col.enabled;
+        if (col) col.enabled = false;
+
+        if (rb) { rb.linearVelocity = Vector2.zero; rb.position = respawnPoint.position; }
+        else { player.transform.position = respawnPoint.position; }
+
+        if (col) col.enabled = prev;
     }
 }

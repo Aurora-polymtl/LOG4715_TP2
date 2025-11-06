@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class PlayerMove2D : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private float m_MaxSpeed = 10f;
-    [SerializeField] private float m_JumpForce = 10f;                  // Amount of force added when the player jumps.
+    [SerializeField] private float m_JumpForce = 10f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float wallSlideSpeed = 2f;

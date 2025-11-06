@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class Health : MonoBehaviour
 {
     [SerializeField] private float healthStart = 3f;
@@ -7,6 +8,7 @@ public class Health : MonoBehaviour
 
     Animator anim;
     Knockback knockback;
+    RespawnController respawnController;
     bool dead;
 
     void Awake()
@@ -14,9 +16,11 @@ public class Health : MonoBehaviour
         currentHealth = healthStart;
         anim = GetComponent<Animator>();
         knockback = GetComponent<Knockback>();
+        respawnController = RespawnController.instance
+                          ?? Object.FindFirstObjectByType<RespawnController>(FindObjectsInactive.Exclude);
     }
 
-    public void TakingDamage(float amount, int hitSide, bool applyKnockback = true)
+    public void TakingDamage(float amount, int hitSide, bool applyKnockback)
     {
         currentHealth = Mathf.Clamp(currentHealth - amount, 0f, healthStart);
 
@@ -28,10 +32,51 @@ public class Health : MonoBehaviour
         }
         else if (!dead)
         {
-            anim.SetTrigger("death");
-            GetComponent<PlayerMove2D>().enabled = false;
-            dead = true;
+            Die(restoreFullHealth: true, useLastSafe: false);
         }
     }
 
+    public void Die(bool restoreFullHealth, bool useLastSafe = true)
+    {
+        if (dead) return;
+        dead = true;
+
+        var controller = GetComponent<PlayerMove2D>();
+        if (controller) controller.enabled = false;
+
+
+        if (!restoreFullHealth && useLastSafe)
+        {
+            // anim.SetTrigger("death");
+            var safe = GetComponent<PlayerSafeGround>();
+            if (safe != null)
+            {
+                safe.TeleportToLastSafe(ignoreHazard: true, ignoreDuration: 0.6f);
+            }
+            else
+            {
+                EnsureController();
+                if (respawnController != null) respawnController.RespawnPlayer();
+            }
+        }
+        else
+        {
+            currentHealth = healthStart;
+            EnsureController();
+            if (respawnController != null) respawnController.RespawnPlayer();
+        }
+        anim.Play("Idle", 0, 0f);
+        if (controller) controller.enabled = true;
+
+        dead = false;
+    }
+
+    void EnsureController()
+    {
+        if (respawnController == null)
+            respawnController = RespawnController.instance
+                             ?? Object.FindFirstObjectByType<RespawnController>(FindObjectsInactive.Exclude);
+        if (respawnController == null)
+            Debug.LogError("[Health] Aucun RespawnController dans la scène.");
+    }
 }

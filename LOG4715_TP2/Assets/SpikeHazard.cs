@@ -9,12 +9,10 @@ public class SpikeHazard : MonoBehaviour
         var hp = other.GetComponent<Health>();
         var safe = other.GetComponent<PlayerSafeGround>();
         if (hp == null || safe == null) return;
+
         if (hp.currentHealth <= 0f || safe.IsInvulnerable) return;
 
-        safe.TeleportToLastSafe();
+        hp.TakingDamage(1f, hitSide: 0, applyKnockback: false);
+        hp.Die(restoreFullHealth: false, useLastSafe: true);
     }
-
-
-
-
 }

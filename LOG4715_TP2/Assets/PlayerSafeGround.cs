@@ -9,7 +9,7 @@ public class PlayerSafeGround : MonoBehaviour
     public LayerMask hazardLayer;
 
     [Header("Layers utilisés par IgnoreLayerCollision")]
-    [SerializeField] private string playerLayerName = "Player";
+    [SerializeField] private string playerLayerName = "player";
     [SerializeField] private string hazardLayerName = "Hazard";
 
     [Header("Offsets de TP")]
@@ -55,21 +55,6 @@ public class PlayerSafeGround : MonoBehaviour
         return hit.collider != null;
     }
 
-    public void TeleportToLastSafe()
-    {
-        float facing = Mathf.Sign(transform.localScale.x);
-        if (Mathf.Approximately(facing, 0f)) facing = 1f;
-
-        Vector2 target = new Vector2(
-            lastSafePos.x,
-            lastSafePos.y
-        );
-
-        rb.linearVelocity = Vector2.zero;
-        if (ignoreRoutine != null) StopCoroutine(ignoreRoutine);
-        ignoreRoutine = StartCoroutine(DoTeleportAndIgnore(target, 0.6f));
-    }
-
     IEnumerator DoTeleportAndIgnore(Vector2 target, float duration)
     {
         IsInvulnerable = true;
@@ -94,6 +79,45 @@ public class PlayerSafeGround : MonoBehaviour
             Physics2D.IgnoreLayerCollision(playerLayer, hazardLayerIdx, false);
 
         IsInvulnerable = false;
+        ignoreRoutine = null;
+    }
+
+    public void ForceSetLastSafe(Vector2 pos) => lastSafePos = pos;
+
+    public void TeleportTo(Vector2 target, bool ignoreHazard = true, float ignoreDuration = 0.6f)
+    {
+        rb.linearVelocity = Vector2.zero;
+        if (ignoreRoutine != null) StopCoroutine(ignoreRoutine);
+        ignoreRoutine = StartCoroutine(DoTeleport(target, ignoreHazard ? ignoreDuration : 0f));
+    }
+
+    public void TeleportToLastSafe(bool ignoreHazard = true, float ignoreDuration = 0.6f)
+    {
+        TeleportTo(lastSafePos, ignoreHazard, ignoreDuration);
+    }
+
+    private IEnumerator DoTeleport(Vector2 target, float ignoreDuration)
+    {
+        IsInvulnerable = ignoreDuration > 0f;
+
+        col.enabled = false;
+        rb.position = target;
+        yield return new WaitForFixedUpdate();
+        col.enabled = true;
+        rb.linearVelocity = Vector2.zero;
+
+        lastSafePos = rb.position;
+
+        if (playerLayer != -1 && hazardLayerIdx != -1)
+            Physics2D.IgnoreLayerCollision(playerLayer, hazardLayerIdx, ignoreDuration > 0f);
+
+        if (ignoreDuration > 0f)
+        {
+            yield return new WaitForSeconds(ignoreDuration);
+            if (playerLayer != -1 && hazardLayerIdx != -1)
+                Physics2D.IgnoreLayerCollision(playerLayer, hazardLayerIdx, false);
+            IsInvulnerable = false;
+        }
         ignoreRoutine = null;
     }
 }
