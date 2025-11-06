@@ -97,8 +97,7 @@ public class PlayerMove2D : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
-            playerStamina.Consume(Stamina.PlayerAction.Dash);
-            StartCoroutine(Dash());
+            if (playerStamina.Consume(Stamina.PlayerAction.Dash)) StartCoroutine(Dash());
         }
         m_Rigidbody2D.gravityScale = 3;
 
