@@ -2,43 +2,36 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float healthStart;
+    [SerializeField] private float healthStart = 3f;
     public float currentHealth { get; private set; }
-    private Animator m_animate;
-    private bool dead;
-    private Knockback knockback;
-    private void Awake()
+
+    Animator anim;
+    Knockback knockback;
+    bool dead;
+
+    void Awake()
     {
         currentHealth = healthStart;
-        m_animate = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         knockback = GetComponent<Knockback>();
-
     }
 
-    public void TakingDamage(float _damage, int hitSide)
+    public void TakingDamage(float amount, int hitSide, bool applyKnockback = true)
     {
-        currentHealth = Mathf.Clamp(currentHealth - _damage, 0, healthStart);
+        currentHealth = Mathf.Clamp(currentHealth - amount, 0f, healthStart);
 
-        if (currentHealth > 0)
+        if (currentHealth > 0f)
         {
-            m_animate.SetTrigger("hurt");
-            if (hitSide == -1)
-            {
-                knockback.CallKnockback(new Vector2(hitSide, 0f), new Vector2(-1, 0.1f));
-            }
-            else
-            {
-                knockback.CallKnockback(new Vector2(hitSide, 0f), new Vector2(1, 0.1f));
-            }
+            anim.SetTrigger("hurt");
+            if (applyKnockback)
+                knockback.CallKnockback(hitSide >= 0 ? 1 : -1);
         }
-        else
+        else if (!dead)
         {
-            if (!dead)
-            {
-                m_animate.SetTrigger("death");
-                GetComponent<PlayerMove2D>().enabled = false;
-                dead = true;
-            }
+            anim.SetTrigger("death");
+            GetComponent<PlayerMove2D>().enabled = false;
+            dead = true;
         }
     }
+
 }
