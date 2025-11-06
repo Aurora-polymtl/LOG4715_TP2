@@ -58,7 +58,16 @@ public class PlayerMove2D : MonoBehaviour
             float objVxAlongPush = pushingRb.linearVelocity.x * dir;
 
             if (objVxAlongPush > 0.01f)
-                playerStamina.Consume(Stamina.PlayerAction.PushObjet);
+            {
+                if (!playerStamina.Consume(Stamina.PlayerAction.PushObjet))
+                {
+                    m_animate.SetBool("pushing", false);
+                    m_Rigidbody2D.mass = 0.01f;
+                }
+            }
+        } else
+        {
+            m_animate.SetBool("pushing", false);
         }
 
         if (!knockback.IsBeingKnockedBack)
