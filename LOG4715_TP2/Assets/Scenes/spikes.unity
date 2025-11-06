@@ -1585,11 +1585,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 984854171629160526, guid: 168390dada3437442aec749d49d08f62, type: 3}
       propertyPath: damage
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 984854171629160526, guid: 168390dada3437442aec749d49d08f62, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2281257391445838383, guid: 168390dada3437442aec749d49d08f62, type: 3}
       propertyPath: m_Name

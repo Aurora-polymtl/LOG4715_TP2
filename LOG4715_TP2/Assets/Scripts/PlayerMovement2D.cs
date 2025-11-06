@@ -97,6 +97,7 @@ public class PlayerMove2D : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
+            playerStamina.Consume(Stamina.PlayerAction.Dash);
             StartCoroutine(Dash());
         }
         m_Rigidbody2D.gravityScale = 3;
@@ -111,6 +112,7 @@ public class PlayerMove2D : MonoBehaviour
 
     private IEnumerator Dash()
     {
+
         Physics2D.IgnoreLayerCollision(10, 9, true);
         canDash = false;
         isDashing = true;
@@ -121,7 +123,6 @@ public class PlayerMove2D : MonoBehaviour
         m_Rigidbody2D.gravityScale = originalGravity;
         isDashing = false;
         Physics2D.IgnoreLayerCollision(10, 9, false);
-
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
 
