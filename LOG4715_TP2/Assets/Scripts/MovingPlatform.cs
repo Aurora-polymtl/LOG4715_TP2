@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    public enum MovementType { Linear, ZigZag, Circular }
+    public enum MovementType { Linear, ZigZag, Circular, Vertical }
 
     [SerializeField] private MovementType movementType = MovementType.Linear;
     [SerializeField] private float speed = 2f;
     [SerializeField] private float distance = 3f; // Pour linear/zigzag
     [SerializeField] private float radius = 2f;   // Pour circular
     [SerializeField] private Vector2 direction = Vector2.right; // Sens du mouvement
+    [SerializeField] private Vector2 upDirection = Vector2.up; // Sens du mouvement
 
     private Vector3 startPos;
     private float timeOffset;
@@ -32,6 +33,10 @@ public class MovingPlatform : MonoBehaviour
                 transform.position = startPos + (Vector3)direction.normalized * Mathf.Sin((Time.time + timeOffset) * speed) * distance;
                 break;
 
+            case MovementType.Vertical:
+                transform.position = startPos + (Vector3)upDirection.normalized * Mathf.Cos((Time.time + timeOffset) * speed) * distance;
+                break;
+
             case MovementType.ZigZag:
                 // Mouvement en "L" (alternance horizontale et verticale)
                 float x = Mathf.Sin((Time.time + timeOffset) * speed) * distance;
@@ -47,24 +52,11 @@ public class MovingPlatform : MonoBehaviour
     }
 
     // --- Gestion du joueur sur la plateforme ---
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerMove2D player = collision.gameObject.GetComponent<PlayerMove2D>();
-            if (player != null)
-            {
-                if (player.IsPlayerIdle())
-                {
-                    if (collision.transform.parent != transform)
-                        collision.transform.SetParent(transform);
-                }
-                else
-                {
-                    if (collision.transform.parent == transform)
-                        collision.transform.SetParent(null);
-                }
-            }
+            collision.transform.SetParent(transform);
         }
     }
 
@@ -72,7 +64,6 @@ public class MovingPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            // On détache le joueur quand il quitte la plateforme
             collision.transform.SetParent(null);
         }
     }
