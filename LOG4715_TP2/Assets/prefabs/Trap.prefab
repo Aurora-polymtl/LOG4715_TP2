@@ -98,6 +98,7 @@ GameObject:
   - component: {fileID: 2737188762363940463}
   - component: {fileID: 7614441319977308901}
   - component: {fileID: 3647045339910953786}
+  - component: {fileID: 874431910964404912}
   m_Layer: 8
   m_Name: Trap
   m_TagString: Enemy
@@ -181,6 +182,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f089de2da0706e4593eb6878a7407b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &874431910964404912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2281257391445838383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4738e113aab614341a147d4852e47cb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  useTrigger: 1
 --- !u!1 &4755943721190405995
 GameObject:
   m_ObjectHideFlags: 0
