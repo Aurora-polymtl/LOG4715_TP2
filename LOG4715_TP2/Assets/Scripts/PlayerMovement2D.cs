@@ -42,6 +42,8 @@ public class PlayerMove2D : MonoBehaviour
     {
         if (isDashing)
         {
+            m_Rigidbody2D.gravityScale = 0f;
+
             return;
         }
 
