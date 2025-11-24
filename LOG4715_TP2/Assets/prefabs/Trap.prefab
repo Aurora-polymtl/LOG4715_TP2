@@ -195,7 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  useTrigger: 1
+  useTrigger: 0
 --- !u!1 &4755943721190405995
 GameObject:
   m_ObjectHideFlags: 0

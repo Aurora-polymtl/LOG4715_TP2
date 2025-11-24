@@ -55,32 +55,6 @@ public class PlayerSafeGround : MonoBehaviour
         return hit.collider != null;
     }
 
-    IEnumerator DoTeleportAndIgnore(Vector2 target, float duration)
-    {
-        IsInvulnerable = true;
-
-        col.enabled = false;
-        rb.position = target;
-        yield return new WaitForFixedUpdate();
-        col.enabled = true;
-        rb.linearVelocity = Vector2.zero;
-
-        if (playerLayer != -1 && hazardLayerIdx != -1)
-            Physics2D.IgnoreLayerCollision(playerLayer, hazardLayerIdx, true);
-
-        float t = 0f;
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            yield return null;
-        }
-
-        if (playerLayer != -1 && hazardLayerIdx != -1)
-            Physics2D.IgnoreLayerCollision(playerLayer, hazardLayerIdx, false);
-
-        IsInvulnerable = false;
-        ignoreRoutine = null;
-    }
 
     public void ForceSetLastSafe(Vector2 pos) => lastSafePos = pos;
 

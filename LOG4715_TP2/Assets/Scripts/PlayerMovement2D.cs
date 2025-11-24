@@ -23,93 +23,106 @@ public class PlayerMove2D : MonoBehaviour
     private bool isPushing;
     private Knockback knockback;
     private float playerInitialMass;
+    [SerializeField] private Vector2 wallJumpPower = new Vector2(8f, 12f);
+    [SerializeField] private float wallJumpDuration = 0.2f;
+    private bool isWallJumping;
 
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_animate = GetComponent<Animator>();
         m_Collider = GetComponent<BoxCollider2D>();
-        // allow dashing when the game starts
         canDash = true;
         playerStamina = GetComponent<Stamina>();
         playerSpeed = GetComponent<Speed>();
         playerInitialMass = m_Rigidbody2D.mass;
         knockback = GetComponent<Knockback>();
     }
-    // Update is called once per frame
     private void Update()
     {
         if (isDashing)
         {
             return;
         }
-        float horizontalInput = Input.GetAxis("Horizontal");
 
-        if (isGrounded() && playerStamina.currentStamina < playerStamina.startingStamina)
+        if (!isWallJumping)
         {
-            playerStamina.Regenerate();
-            m_Rigidbody2D.mass = playerInitialMass;
-        }
+            float horizontalInput = Input.GetAxis("Horizontal");
 
-        if (isPushing && Mathf.Abs(Input.GetAxis("Horizontal")) > 0.1f && pushingRb != null)
-        {
-            m_animate.SetBool("pushing", true);
-            float dir = Mathf.Sign(Input.GetAxis("Horizontal"));
-            float objVxAlongPush = pushingRb.linearVelocity.x * dir;
-
-            if (objVxAlongPush > 0.01f)
+            if (isGrounded() && playerStamina.currentStamina < playerStamina.startingStamina)
             {
-                if (!playerStamina.Consume(Stamina.PlayerAction.PushObjet))
+                playerStamina.Regenerate();
+                m_Rigidbody2D.mass = playerInitialMass;
+            }
+
+            if (isPushing && Mathf.Abs(horizontalInput) > 0.1f && pushingRb != null)
+            {
+                m_animate.SetBool("pushing", true);
+                float dir = Mathf.Sign(horizontalInput);
+                float objVxAlongPush = pushingRb.linearVelocity.x * dir;
+
+                if (objVxAlongPush > 0.01f)
                 {
-                    m_animate.SetBool("pushing", false);
-                    m_Rigidbody2D.mass = 0.01f;
+                    if (!playerStamina.Consume(Stamina.PlayerAction.PushObjet))
+                    {
+                        m_animate.SetBool("pushing", false);
+                        m_Rigidbody2D.mass = 0.01f;
+                    }
                 }
             }
-        } else
-        {
-            m_animate.SetBool("pushing", false);
-        }
-
-        if (!knockback.IsBeingKnockedBack)
-        {
-            if (!this.isSlidingOnWall)
+            else
             {
-                float moveSpeed = m_MaxSpeed;
-                if (playerSpeed.currentSpeed > 0f) moveSpeed *= 2f;
-                m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * moveSpeed, m_Rigidbody2D.linearVelocity.y);
-            }
-            if (horizontalInput > 0.01f)
-            {
-                transform.localScale = Vector2.one;
-            }
-            else if (horizontalInput < -0.01f)
-            {
-                transform.localScale = new Vector2(-1, 1);
+                m_animate.SetBool("pushing", false);
             }
 
-            if (Input.GetKey(KeyCode.Space) && isGrounded())
+            if (!knockback.IsBeingKnockedBack)
             {
-                Jump();
-            }
+                if (!this.isSlidingOnWall)
+                {
+                    float moveSpeed = m_MaxSpeed;
+                    if (playerSpeed.currentSpeed > 0f) moveSpeed *= 2f;
 
-            m_animate.SetBool("run", horizontalInput != 0);
+                    m_Rigidbody2D.linearVelocity = new Vector2(horizontalInput * moveSpeed, m_Rigidbody2D.linearVelocity.y);
+                }
+
+                if (horizontalInput > 0.01f)
+                {
+                    transform.localScale = Vector2.one;
+                }
+                else if (horizontalInput < -0.01f)
+                {
+                    transform.localScale = new Vector2(-1, 1);
+                }
+
+                if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+                {
+                    Jump();
+                }
+
+                m_animate.SetBool("run", horizontalInput != 0);
+            }
         }
 
         m_animate.SetBool("grounded", isGrounded());
 
         isWallSliding();
 
-        if (Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
+        if (Input.GetKeyDown(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
         {
-            if (playerStamina.Consume(Stamina.PlayerAction.WallJump)) Jump();
+            if (playerStamina.Consume(Stamina.PlayerAction.WallJump))
+            {
+                WallJump();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
-            if (playerStamina.Consume(Stamina.PlayerAction.Dash)) StartCoroutine(Dash());
+            if (playerStamina.Consume(Stamina.PlayerAction.Dash))
+            {
+                StartCoroutine(Dash());
+            }
         }
         m_Rigidbody2D.gravityScale = 3;
-
     }
 
     private void Jump()
@@ -118,6 +131,20 @@ public class PlayerMove2D : MonoBehaviour
         m_animate.SetTrigger("jump");
     }
 
+    private void WallJump()
+    {
+        isWallJumping = true;
+        float wallDirection = -Mathf.Sign(transform.localScale.x);
+        m_Rigidbody2D.linearVelocity = new Vector2(wallDirection * wallJumpPower.x, wallJumpPower.y);
+        transform.localScale = new Vector2(wallDirection, 1f);
+        m_animate.SetTrigger("jump");
+        Invoke(nameof(StopWallJump), wallJumpDuration);
+    }
+
+    private void StopWallJump()
+    {
+        isWallJumping = false;
+    }
     private IEnumerator Dash()
     {
 

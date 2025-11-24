@@ -33,11 +33,14 @@ public class Health : MonoBehaviour
         else if (!dead)
         {
             Die(restoreFullHealth: true, useLastSafe: false);
+
+
         }
     }
 
     public void Die(bool restoreFullHealth, bool useLastSafe = true)
     {
+        print("Player died.");
         if (dead) return;
         dead = true;
 
@@ -51,6 +54,7 @@ public class Health : MonoBehaviour
             var safe = GetComponent<PlayerSafeGround>();
             if (safe != null)
             {
+                print("Teleporting to last safe ground.");
                 safe.TeleportToLastSafe(ignoreHazard: true, ignoreDuration: 0.6f);
             }
             else
