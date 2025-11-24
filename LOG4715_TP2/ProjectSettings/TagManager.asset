@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Pushable
   - PowerUp
+  - pushable
   layers:
   - Default
   - TransparentFX
@@ -44,6 +45,12 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3894845557
+    locked: 0
+  - name: ground
+    uniqueID: 855942917
     locked: 0
   - name: Fireball
     uniqueID: 3475140429
