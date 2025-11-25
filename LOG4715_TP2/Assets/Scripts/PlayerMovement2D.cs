@@ -8,6 +8,8 @@ public class PlayerMove2D : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float wallSlideSpeed = 2f;
+    [SerializeField] private AudioClip playerJumpSound;
+    [SerializeField] private AudioClip playerDashSound;
     private Rigidbody2D pushingRb;
     private bool isSlidingOnWall;
     private Rigidbody2D m_Rigidbody2D;
@@ -114,6 +116,8 @@ public class PlayerMove2D : MonoBehaviour
             if (playerStamina.Consume(Stamina.PlayerAction.WallJump))
             {
                 WallJump();
+                if (Input.GetKeyDown(KeyCode.Space) && !isGrounded())
+                    SoundManager.instance.PlaySound(playerJumpSound);
             }
         }
 
@@ -122,6 +126,7 @@ public class PlayerMove2D : MonoBehaviour
             if (playerStamina.Consume(Stamina.PlayerAction.Dash))
             {
                 StartCoroutine(Dash());
+                SoundManager.instance.PlaySound(playerDashSound);
             }
         }
         m_Rigidbody2D.gravityScale = 3;
@@ -131,6 +136,10 @@ public class PlayerMove2D : MonoBehaviour
     {
         m_Rigidbody2D.linearVelocity = new Vector2(m_Rigidbody2D.linearVelocity.x, m_JumpForce);
         m_animate.SetTrigger("jump");
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+        {
+            SoundManager.instance.PlaySound(playerJumpSound);
+        }
     }
 
     private void WallJump()
