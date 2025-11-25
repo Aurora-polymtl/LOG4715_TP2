@@ -20,6 +20,8 @@ public class RespawnController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            var hp = collision.GetComponent<Health>();
+            hp.TakingDamage(1f, hitSide: 0, applyKnockback: false);
             collision.transform.position = respawnPoint.position;
         }
     }
