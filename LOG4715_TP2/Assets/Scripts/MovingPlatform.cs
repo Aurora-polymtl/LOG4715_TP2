@@ -8,6 +8,7 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField] private float speed = 2f;
     [SerializeField] private float distance = 3f; // Pour linear/zigzag
     [SerializeField] private float radius = 2f;   // Pour circular
+    [SerializeField] private float verticalDistance = 2f; // Pour linear/zigzag
     [SerializeField] private Vector2 direction = Vector2.right; // Sens du mouvement
     [SerializeField] private Vector2 upDirection = Vector2.up; // Sens du mouvement
 
@@ -34,7 +35,7 @@ public class MovingPlatform : MonoBehaviour
                 break;
 
             case MovementType.Vertical:
-                transform.position = startPos + (Vector3)upDirection.normalized * Mathf.Cos((Time.time + timeOffset) * speed) * distance;
+                transform.position = startPos + (Vector3)upDirection.normalized * Mathf.Cos((Time.time + timeOffset) * speed) * (verticalDistance);
                 break;
 
             case MovementType.ZigZag:
