@@ -1648,9 +1648,9 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 821f0af301bb2a149a87126c7f409ab5, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.257
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4502,6 +4502,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 905171722}
     m_Modifications:
+    - target: {fileID: 2208666224341570366, guid: e92d402a393500c43a58e71f927b71d0, type: 3}
+      propertyPath: m_Color.a
+      value: 0.2509804
+      objectReference: {fileID: 0}
     - target: {fileID: 4598475810993642380, guid: e92d402a393500c43a58e71f927b71d0, type: 3}
       propertyPath: m_Name
       value: PauseUI
