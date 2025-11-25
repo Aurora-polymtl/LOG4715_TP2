@@ -24,6 +24,10 @@ public class PlayerMove2D : MonoBehaviour
     private Knockback knockback;
     private float playerInitialMass;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip playerJumpSound;
+    [SerializeField] private AudioClip playerDashSound;
+
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
@@ -90,6 +94,7 @@ public class PlayerMove2D : MonoBehaviour
             if (Input.GetKey(KeyCode.Space) && isGrounded())
             {
                 Jump();
+                
             }
 
             m_animate.SetBool("run", horizontalInput != 0);
@@ -101,12 +106,18 @@ public class PlayerMove2D : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && !isGrounded() && isSlidingOnWall)
         {
-            if (playerStamina.Consume(Stamina.PlayerAction.WallJump)) Jump();
+            if (playerStamina.Consume(Stamina.PlayerAction.WallJump))
+            Jump();
+            if (Input.GetKeyDown(KeyCode.Space) && !isGrounded())
+                SoundManager.instance.PlaySound(playerJumpSound);
         }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && canDash)
         {
-            if (playerStamina.Consume(Stamina.PlayerAction.Dash)) StartCoroutine(Dash());
+            if (playerStamina.Consume(Stamina.PlayerAction.Dash)) {
+                StartCoroutine(Dash());
+                SoundManager.instance.PlaySound(playerDashSound);
+            } 
         }
         m_Rigidbody2D.gravityScale = 3;
 
@@ -116,6 +127,10 @@ public class PlayerMove2D : MonoBehaviour
     {
         m_Rigidbody2D.linearVelocity = new Vector2(m_Rigidbody2D.linearVelocity.x, m_JumpForce);
         m_animate.SetTrigger("jump");
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
+        {
+            SoundManager.instance.PlaySound(playerJumpSound);
+        }
     }
 
     private IEnumerator Dash()
