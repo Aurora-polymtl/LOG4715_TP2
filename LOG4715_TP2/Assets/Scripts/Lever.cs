@@ -23,6 +23,8 @@ public class Lever : MonoBehaviour
 
     public UnityEvent OnTriggerLever;
 
+    [SerializeField] private AudioClip playerLeverSound;
+
     private void Awake()
     {
         render = GetComponent<SpriteRenderer>();
@@ -53,6 +55,7 @@ public class Lever : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
             {
                 Activate();
+                SoundManager.instance.PlaySound(playerLeverSound);
             }
         }
     }
