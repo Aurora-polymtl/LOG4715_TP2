@@ -15,7 +15,7 @@ public class PlayerMove2D : MonoBehaviour
     private BoxCollider2D m_Collider;
     private bool canDash;
     private bool isDashing;
-    private float dashingPower = 24f;
+    private float dashingPower = 22f;
     private float dashingTime = 0.2f;
     private float dashingCooldown = 1f;
     private Stamina playerStamina;
@@ -23,7 +23,7 @@ public class PlayerMove2D : MonoBehaviour
     private bool isPushing;
     private Knockback knockback;
     private float playerInitialMass;
-    [SerializeField] private Vector2 wallJumpPower = new Vector2(8f, 12f);
+    [SerializeField] private Vector2 wallJumpPower = new Vector2(6f, 10f);
     [SerializeField] private float wallJumpDuration = 0.2f;
     private bool isWallJumping;
 
