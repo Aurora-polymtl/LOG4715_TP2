@@ -6,6 +6,8 @@ public class door : MonoBehaviour
     private Rigidbody2D doorBody;
     private SpriteRenderer doorRenderer;
 
+    [SerializeField] private AudioClip doorSound;
+
     void Awake()
     {
         // Récupère les composants du parent
@@ -28,6 +30,7 @@ public class door : MonoBehaviour
         // Rend la porte invisible
         if (doorRenderer != null)
             doorRenderer.enabled = false;
+        SoundManager.instance.PlaySound(doorSound);
 
     }
 

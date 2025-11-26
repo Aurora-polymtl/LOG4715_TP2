@@ -5,6 +5,9 @@ public class Speed : MonoBehaviour
     [SerializeField] public float startingSpeed = 10f;
     [SerializeField] public float consumptionPerSecond = 5f;
     [SerializeField] private SpeedBar speedBar;
+    [SerializeField] private AudioClip playerOneSpeedSound;
+    [SerializeField] private AudioClip playerAllSpeedSound;
+
     public float currentSpeed { get; private set; }
     public int nSpeedPowerUpPickedUp = 0;
 
@@ -24,12 +27,14 @@ public class Speed : MonoBehaviour
     public void AddFragment()
     {
         nSpeedPowerUpPickedUp++;
+        SoundManager.instance.PlaySound(playerOneSpeedSound);
 
         if (nSpeedPowerUpPickedUp >= 3 && currentSpeed <= 0f)
         {
             nSpeedPowerUpPickedUp = 0;
             currentSpeed = startingSpeed;
             speedBar.Show();
+            SoundManager.instance.PlaySound(playerAllSpeedSound);
         }
     }
 }

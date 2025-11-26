@@ -6,7 +6,7 @@ public class Checkpoint : MonoBehaviour
     public SpriteRenderer flagRenderer;
     public Sprite activatedSprite;
     public ParticleSystem flagParticles;
-
+    [SerializeField] private AudioClip checkpointMarkSound;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
@@ -15,7 +15,7 @@ public class Checkpoint : MonoBehaviour
             trigger.enabled = false;
             flagRenderer.sprite = activatedSprite;
             flagParticles.Play();
-
+            SoundManager.instance.PlaySound(checkpointMarkSound);
         }
     }
 }

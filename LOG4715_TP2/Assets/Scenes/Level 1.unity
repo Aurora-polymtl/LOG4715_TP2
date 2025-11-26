@@ -665,6 +665,7 @@ MonoBehaviour:
   flagRenderer: {fileID: 181129423}
   activatedSprite: {fileID: 8461808629547038638, guid: 72344fb2a7e4a724d87411bdda2a2e51, type: 3}
   flagParticles: {fileID: 916639476}
+  checkpointMarkSound: {fileID: 8300000, guid: 7f8c13acbced0b54d87260f3909e0322, type: 3}
 --- !u!61 &181129422
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -899,6 +900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d22d17614515d478c237658cd0e1b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorSound: {fileID: 8300000, guid: 2fdb1198bd717aa49a4818075d25e2b3, type: 3}
 --- !u!1 &221755300
 GameObject:
   m_ObjectHideFlags: 0
@@ -15600,6 +15602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7d22d17614515d478c237658cd0e1b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  doorSound: {fileID: 8300000, guid: 2fdb1198bd717aa49a4818075d25e2b3, type: 3}
 --- !u!1001 &1107123327
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16365,6 +16368,7 @@ MonoBehaviour:
   flagRenderer: {fileID: 1357108744}
   activatedSprite: {fileID: 8461808629547038638, guid: 72344fb2a7e4a724d87411bdda2a2e51, type: 3}
   flagParticles: {fileID: 1984918624}
+  checkpointMarkSound: {fileID: 8300000, guid: 7f8c13acbced0b54d87260f3909e0322, type: 3}
 --- !u!61 &1357108743
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17111,6 +17115,14 @@ PrefabInstance:
       propertyPath: speedBar
       value: 
       objectReference: {fileID: 1737235572}
+    - target: {fileID: 2929355490613362514, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
+      propertyPath: playerAllSpeedSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 78e89ba4b2bc9f04d8d7ceb0c2504dcb, type: 3}
+    - target: {fileID: 2929355490613362514, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
+      propertyPath: playerOneSpeedSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0ae69c94941101342bddd256bf193d30, type: 3}
     - target: {fileID: 4923002741967960321, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
       propertyPath: m_Name
       value: Player
