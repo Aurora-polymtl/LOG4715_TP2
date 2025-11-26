@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject endScreen;
 
+
     private void Awake()
     {
         pauseScreen.SetActive(false);
@@ -48,8 +49,8 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void OnApplicationQuit()
-    {
-        Application.Quit();
-    }
+    public void SoundVolume() { }
+
+    public void MusicVolume() { }
+
 }
