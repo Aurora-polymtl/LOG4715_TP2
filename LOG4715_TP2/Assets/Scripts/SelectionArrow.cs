@@ -23,7 +23,7 @@ public class SelectionArrow : MonoBehaviour
         {
             ChangePosition(1);
         }
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.Z))
         {
             Interact();
         }

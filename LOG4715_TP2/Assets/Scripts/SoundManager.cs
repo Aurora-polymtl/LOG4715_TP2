@@ -27,16 +27,36 @@ public class SoundManager : MonoBehaviour
 
     public void StopSound(float sound)
     {
-        float currentVolume = 1;
+        float currentVolume = PlayerPrefs.GetFloat("soundVolume");
         currentVolume += sound;
+        if(currentVolume > 1)
+        {
+            currentVolume = 0;
+
+        }
+        else if(currentVolume < 0)
+        {
+            currentVolume = 1;
+        }
         sourceSound.volume = currentVolume;
+        PlayerPrefs.SetFloat("soundVolume", currentVolume);
     }
 
     public void StopMusic(float sound)
     {
-        float currentVolume = 1;
+        float currentVolume = PlayerPrefs.GetFloat("musicVolume");
         currentVolume += sound;
-        sourceMusic.volume = currentVolume;
+        if (currentVolume > 1)
+        {
+            currentVolume = 0;
 
+        }
+        else if (currentVolume < 0)
+        {
+            currentVolume = 1;
+        }
+
+        sourceMusic.volume = currentVolume;
+        PlayerPrefs.SetFloat("musicVolume", currentVolume);
     }
 }

@@ -49,8 +49,12 @@ public class UIManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void SoundVolume() { }
+    public void SoundVolume() {
+        SoundManager.instance.StopSound(1f);
+    }
 
-    public void MusicVolume() { }
+    public void MusicVolume() {
+        SoundManager.instance.StopMusic(1f);
+    }
 
 }
