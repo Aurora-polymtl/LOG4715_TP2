@@ -54,7 +54,7 @@ public class UIManager : MonoBehaviour
     }
 
     public void MusicVolume() {
-        SoundManager.instance.StopMusic(1f);
+        SoundManager.instance.EditMusic(1f);
     }
 
 }

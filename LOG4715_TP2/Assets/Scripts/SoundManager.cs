@@ -19,6 +19,8 @@ public class SoundManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        EditMusic(0);
+        StopSound(0);
     }
     public void PlaySound(AudioClip sound)
     {
@@ -27,25 +29,18 @@ public class SoundManager : MonoBehaviour
 
     public void StopSound(float sound)
     {
-        float currentVolume = PlayerPrefs.GetFloat("soundVolume");
-        currentVolume += sound;
-        if(currentVolume > 1)
-        {
-            currentVolume = 0;
-
-        }
-        else if(currentVolume < 0)
-        {
-            currentVolume = 1;
-        }
-        sourceSound.volume = currentVolume;
-        PlayerPrefs.SetFloat("soundVolume", currentVolume);
+        ChangeVolume(1, "soundVolume", sound, sourceSound);
     }
 
-    public void StopMusic(float sound)
+    public void EditMusic(float music)
     {
-        float currentVolume = PlayerPrefs.GetFloat("musicVolume");
-        currentVolume += sound;
+        ChangeVolume(1, "musicVolume", music, sourceMusic);
+    }
+
+    private void ChangeVolume(float basicVolume, string volumeName, float volume, AudioSource audioSource)
+    {
+        float currentVolume = PlayerPrefs.GetFloat(volumeName, 1);
+        currentVolume += volume;
         if (currentVolume > 1)
         {
             currentVolume = 0;
@@ -55,8 +50,8 @@ public class SoundManager : MonoBehaviour
         {
             currentVolume = 1;
         }
-
-        sourceMusic.volume = currentVolume;
-        PlayerPrefs.SetFloat("musicVolume", currentVolume);
+        float trueVolume = currentVolume *= basicVolume;
+        audioSource.volume = trueVolume;
+        PlayerPrefs.SetFloat(volumeName, currentVolume);
     }
 }
