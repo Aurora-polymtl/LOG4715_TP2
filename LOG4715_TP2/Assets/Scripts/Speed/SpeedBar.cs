@@ -5,7 +5,7 @@ public class SpeedBar : MonoBehaviour
 {
     [SerializeField] private Speed playerSpeed;
     [SerializeField] private Image currentSpeedBar;
-    
+
     private void Update()
     {
         if (playerSpeed == null || currentSpeedBar == null) return;

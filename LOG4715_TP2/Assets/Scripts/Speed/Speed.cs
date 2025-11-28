@@ -1,10 +1,13 @@
 using UnityEngine;
+using System.Collections;
 
 public class Speed : MonoBehaviour
 {
     [SerializeField] public float startingSpeed = 10f;
     [SerializeField] public float consumptionPerSecond = 5f;
     [SerializeField] private SpeedBar speedBar;
+    [SerializeField] private float respawnTime = 5f;
+    private bool isRespawning = false;
     public float currentSpeed { get; private set; }
     public int nSpeedPowerUpPickedUp = 0;
 
@@ -15,13 +18,19 @@ public class Speed : MonoBehaviour
     }
     private void Update()
     {
-        if (currentSpeed <= 0f) return;
-
-        currentSpeed = Mathf.Max(0f, currentSpeed - consumptionPerSecond * Time.deltaTime);
-        if (currentSpeed <= 0f) speedBar.Hide();
+        if (currentSpeed > 0f)
+        {
+            currentSpeed = Mathf.Max(0f, currentSpeed - consumptionPerSecond * Time.deltaTime);
+            if (currentSpeed <= 0f && !isRespawning)
+            {
+                isRespawning = true;
+                speedBar.Hide();
+                StartCoroutine(RespawnAfterDelay());
+            }
+        }
     }
 
-    public void AddFragment()
+    public void PickupFragment()
     {
         nSpeedPowerUpPickedUp++;
 
@@ -31,5 +40,12 @@ public class Speed : MonoBehaviour
             currentSpeed = startingSpeed;
             speedBar.Show();
         }
+    }
+
+    public IEnumerator RespawnAfterDelay()
+    {
+        yield return new WaitForSeconds(respawnTime);
+        PowerUpManager.Instance.RespawnAll();
+        isRespawning = false;
     }
 }

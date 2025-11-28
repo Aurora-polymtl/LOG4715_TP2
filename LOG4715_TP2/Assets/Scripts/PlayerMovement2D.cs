@@ -53,7 +53,7 @@ public class PlayerMove2D : MonoBehaviour
         {
             float horizontalInput = Input.GetAxis("Horizontal");
 
-            if (isGrounded() && playerStamina.currentStamina < playerStamina.startingStamina)
+            if (isGrounded() && playerStamina.currentStamina < playerStamina.startingStamina && !isPushing)
             {
                 playerStamina.Regenerate();
                 m_Rigidbody2D.mass = playerInitialMass;
@@ -230,8 +230,8 @@ public class PlayerMove2D : MonoBehaviour
     {
         if (powerUp.CompareTag("PowerUp"))
         {
-            playerSpeed.AddFragment();
-            Destroy(powerUp.gameObject);
+            playerSpeed.PickupFragment();
+            powerUp.gameObject.SetActive(false);
         }
     }
 
