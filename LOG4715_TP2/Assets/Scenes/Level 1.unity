@@ -17764,14 +17764,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 852448871738019219, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
-      propertyPath: damageInvulnerability
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 852448871738019219, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
-      propertyPath: movementDisableAfterDeath
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 852448871738019219, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
       propertyPath: playerHurtSound
       value: 
       objectReference: {fileID: 8300000, guid: f4324dc428f692345b91c3e01e8c1422, type: 3}
@@ -17779,13 +17771,21 @@ PrefabInstance:
       propertyPath: playerDeathSound
       value: 
       objectReference: {fileID: 8300000, guid: 25a0e72abd61151458753d4241d2fd33, type: 3}
+    - target: {fileID: 852448871738019219, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
+      propertyPath: damageInvulnerability
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 852448871738019219, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
+      propertyPath: movementDisableAfterDeath
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1726383537570511781, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 60.275
+      value: -10.34
       objectReference: {fileID: 0}
     - target: {fileID: 1726383537570511781, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 32.538
+      value: -0.41
       objectReference: {fileID: 0}
     - target: {fileID: 1726383537570511781, guid: 3f0cac37bb79ca746a7ba5786bf285bf, type: 3}
       propertyPath: m_LocalPosition.z

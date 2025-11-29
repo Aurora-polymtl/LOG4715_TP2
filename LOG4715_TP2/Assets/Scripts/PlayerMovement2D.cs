@@ -27,6 +27,7 @@ public class PlayerMove2D : MonoBehaviour
     private float playerInitialMass;
     [SerializeField] private Vector2 wallJumpPower = new Vector2(6f, 10f);
     [SerializeField] private float wallJumpDuration = 0.2f;
+    [SerializeField] private TrailRenderer dashTrail;
     private bool isWallJumping;
 
     private void Awake()
@@ -162,12 +163,15 @@ public class PlayerMove2D : MonoBehaviour
         Physics2D.IgnoreLayerCollision(10, 9, true);
         canDash = false;
         isDashing = true;
+        m_animate.SetTrigger("dash");
         float originalGravity = m_Rigidbody2D.gravityScale;
         m_Rigidbody2D.gravityScale = 0f;
         m_Rigidbody2D.linearVelocity = new Vector2(transform.localScale.x * dashingPower, 0f);
+        dashTrail.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         m_Rigidbody2D.gravityScale = originalGravity;
         isDashing = false;
+        dashTrail.emitting = false;
         Physics2D.IgnoreLayerCollision(10, 9, false);
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
