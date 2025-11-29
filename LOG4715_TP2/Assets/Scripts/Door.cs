@@ -5,6 +5,7 @@ public class door : MonoBehaviour
     private Collider2D doorCollider;
     private Rigidbody2D doorBody;
     private SpriteRenderer doorRenderer;
+    [SerializeField] private AudioClip doorSound;
 
     void Awake()
     {
@@ -28,7 +29,7 @@ public class door : MonoBehaviour
         // Rend la porte invisible
         if (doorRenderer != null)
             doorRenderer.enabled = false;
-
+            SoundManager.instance.PlaySound(doorSound);
     }
 
     public void CloseDoor()

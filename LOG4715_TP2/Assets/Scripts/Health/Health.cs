@@ -4,6 +4,8 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] private float healthStart = 3f;
+    [SerializeField] private AudioClip playerHurtSound;
+    [SerializeField] private AudioClip playerDeathSound;
     public float currentHealth { get; private set; }
 
     Animator anim;
@@ -28,10 +30,13 @@ public class Health : MonoBehaviour
             anim.SetTrigger("hurt");
             if (applyKnockback)
                 knockback.CallKnockback(hitSide >= 0 ? 1 : -1);
+                SoundManager.instance.PlaySound(playerHurtSound);
+
         }
         else if (!dead)
         {
             Die(restoreFullHealth: true, useLastSafe: false);
+            SoundManager.instance.PlaySound(playerDeathSound);
         }
     }
 
