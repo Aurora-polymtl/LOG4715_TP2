@@ -7,23 +7,7 @@ public class RespawnController : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null && instance != this)
-        {
-            Debug.LogWarning("[RespawnController] Instance dupliquée détruite.");
-            Destroy(gameObject);
-            return;
-        }
         instance = this;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            var hp = collision.GetComponent<Health>();
-            hp.TakingDamage(1f, hitSide: 0, applyKnockback: false);
-            collision.transform.position = respawnPoint.position;
-        }
     }
 
     public void RespawnPlayer()
