@@ -16,8 +16,7 @@ public class Health : MonoBehaviour
         currentHealth = healthStart;
         anim = GetComponent<Animator>();
         knockback = GetComponent<Knockback>();
-        respawnController = RespawnController.instance
-                          ?? Object.FindFirstObjectByType<RespawnController>(FindObjectsInactive.Exclude);
+        respawnController = RespawnController.instance;
     }
 
     public void TakingDamage(float amount, int hitSide, bool applyKnockback)
@@ -33,8 +32,6 @@ public class Health : MonoBehaviour
         else if (!dead)
         {
             Die(restoreFullHealth: true, useLastSafe: false);
-
-
         }
     }
 
@@ -47,7 +44,6 @@ public class Health : MonoBehaviour
         var controller = GetComponent<PlayerMove2D>();
         if (controller) controller.enabled = false;
 
-
         if (!restoreFullHealth && useLastSafe)
         {
             // anim.SetTrigger("death");
@@ -59,28 +55,17 @@ public class Health : MonoBehaviour
             }
             else
             {
-                EnsureController();
                 if (respawnController != null) respawnController.RespawnPlayer();
             }
         }
         else
         {
             currentHealth = healthStart;
-            EnsureController();
             if (respawnController != null) respawnController.RespawnPlayer();
         }
         anim.Play("Idle", 0, 0f);
         if (controller) controller.enabled = true;
 
         dead = false;
-    }
-
-    void EnsureController()
-    {
-        if (respawnController == null)
-            respawnController = RespawnController.instance
-                             ?? Object.FindFirstObjectByType<RespawnController>(FindObjectsInactive.Exclude);
-        if (respawnController == null)
-            Debug.LogError("[Health] Aucun RespawnController dans la scène.");
     }
 }
