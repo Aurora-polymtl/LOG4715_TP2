@@ -16,6 +16,15 @@ public class PlayerSafeGround : MonoBehaviour
     [SerializeField] private float teleportXOffset = 0.5f;
     [SerializeField] private float teleportYOffset = 0.5f;
 
+    [Header("Safe position buffering")]
+    [SerializeField]
+    [Tooltip("Number of FixedUpdate samples to keep in the buffer (higher = older safe positions available)")]
+    private int safePositionBufferSize = 12;
+
+    [SerializeField]
+    [Tooltip("How many samples back to use as the 'last safe' position. For example, 3 means lastSafePos = position from 3 FixedUpdate steps ago.")]
+    private int safePositionLookback = 3;
+
     public Vector2 lastSafePos { get; private set; }
     public bool IsInvulnerable { get; private set; }
 
@@ -24,6 +33,7 @@ public class PlayerSafeGround : MonoBehaviour
 
     int playerLayer = -1, hazardLayerIdx = -1;
     Coroutine ignoreRoutine;
+    private System.Collections.Generic.List<Vector2> safePositions = new System.Collections.Generic.List<Vector2>();
 
     void Awake()
     {
@@ -40,7 +50,17 @@ public class PlayerSafeGround : MonoBehaviour
     void FixedUpdate()
     {
         if (!IsInvulnerable && IsGrounded() && !HazardJustBelow())
-            lastSafePos = rb.position;
+        {
+            safePositions.Add(rb.position);
+            if (safePositions.Count > safePositionBufferSize)
+                safePositions.RemoveAt(0);
+
+            if (safePositions.Count > safePositionLookback)
+            {
+                int index = safePositions.Count - 1 - safePositionLookback;
+                lastSafePos = safePositions[index];
+            }
+        }
     }
 
     bool IsGrounded()
@@ -67,7 +87,14 @@ public class PlayerSafeGround : MonoBehaviour
 
     public void TeleportToLastSafe(bool ignoreHazard = true, float ignoreDuration = 0.6f)
     {
-        TeleportTo(lastSafePos + new Vector2(-teleportXOffset, 0), ignoreHazard, ignoreDuration);
+        float dir = Mathf.Sign(transform.position.x - lastSafePos.x);
+        if (dir == 0f)
+        {
+            dir = Mathf.Sign(transform.localScale.x);
+            if (dir == 0f) dir = 1f;
+        }
+        float xOff = dir * teleportXOffset;
+        TeleportTo(lastSafePos + new Vector2(xOff, teleportYOffset), ignoreHazard, ignoreDuration);
     }
 
     private IEnumerator DoTeleport(Vector2 target, float ignoreDuration)
@@ -81,6 +108,8 @@ public class PlayerSafeGround : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
 
         lastSafePos = rb.position;
+        safePositions.Clear();
+        safePositions.Add(lastSafePos);
 
         if (playerLayer != -1 && hazardLayerIdx != -1)
             Physics2D.IgnoreLayerCollision(playerLayer, hazardLayerIdx, ignoreDuration > 0f);
