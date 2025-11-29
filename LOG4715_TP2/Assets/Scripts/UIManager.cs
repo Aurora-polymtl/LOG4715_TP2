@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private GameObject pauseScreen;
     [SerializeField] private GameObject endScreen;
+    [SerializeField] private string mainMenuSceneName = "MenuScene";
 
     private void Awake()
     {
@@ -45,7 +46,7 @@ public class UIManager : MonoBehaviour
 
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 
     public void OnApplicationQuit()
