@@ -20,6 +20,7 @@ public class Lever : MonoBehaviour
     private LeverState prev_state;
     private bool canActivate = false;
     private float cooldown = 0f;
+    [SerializeField] private AudioClip playerLeverSound;
 
     public UnityEvent OnTriggerLever;
 
@@ -53,6 +54,7 @@ public class Lever : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(0))
             {
                 Activate();
+                SoundManager.instance.PlaySound(playerLeverSound);
             }
         }
     }
