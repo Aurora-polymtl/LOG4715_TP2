@@ -67,7 +67,7 @@ public class PlayerSafeGround : MonoBehaviour
 
     public void TeleportToLastSafe(bool ignoreHazard = true, float ignoreDuration = 0.6f)
     {
-        TeleportTo(lastSafePos, ignoreHazard, ignoreDuration);
+        TeleportTo(lastSafePos + new Vector2(-teleportXOffset, 0), ignoreHazard, ignoreDuration);
     }
 
     private IEnumerator DoTeleport(Vector2 target, float ignoreDuration)

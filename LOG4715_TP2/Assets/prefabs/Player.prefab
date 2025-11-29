@@ -130,7 +130,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.07540631, y: 0.0024285614}
+  m_Offset: {x: 0.01, y: 0.0024285614}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -140,7 +140,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.764277, y: 0.91032666}
+  m_Size: {x: 0.56, y: 0.67}
   m_EdgeRadius: 0
 --- !u!50 &2628769652325499902
 Rigidbody2D:
@@ -190,6 +190,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   wallSlideSpeed: 2
+  playerJumpSound: {fileID: 0}
+  playerDashSound: {fileID: 0}
+  wallJumpPower: {x: 6, y: 10}
+  wallJumpDuration: 0.2
 --- !u!95 &5448790661633108738
 Animator:
   serializedVersion: 7
@@ -225,6 +229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthStart: 3
+  movementDisableAfterDeath: 2
+  damageInvulnerability: 2.5
 --- !u!114 &6478692040725156689
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +274,7 @@ MonoBehaviour:
   startingSpeed: 10
   consumptionPerSecond: 5
   speedBar: {fileID: 0}
+  respawnTime: 5
   nSpeedPowerUpPickedUp: 0
 --- !u!114 &846572718161881129
 MonoBehaviour:

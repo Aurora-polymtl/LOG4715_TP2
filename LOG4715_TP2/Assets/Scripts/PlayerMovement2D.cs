@@ -14,7 +14,7 @@ public class PlayerMove2D : MonoBehaviour
     private bool isSlidingOnWall;
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_animate;
-    private BoxCollider2D m_Collider;
+    private PolygonCollider2D m_Collider;
     private bool canDash;
     private bool isDashing;
     private float dashingPower = 22f;
@@ -33,7 +33,7 @@ public class PlayerMove2D : MonoBehaviour
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_animate = GetComponent<Animator>();
-        m_Collider = GetComponent<BoxCollider2D>();
+        m_Collider = GetComponent<PolygonCollider2D>();
         canDash = true;
         playerStamina = GetComponent<Stamina>();
         playerSpeed = GetComponent<Speed>();
