@@ -5,23 +5,35 @@ public class UIManager : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private GameObject pauseScreen;
+    [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject endScreen;
+    [SerializeField] private string mainMenuSceneName = "MenuScene";
 
     private void Awake()
     {
         pauseScreen.SetActive(false);
+        if (optionsPanel != null)
+            optionsPanel.SetActive(false);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P)) {
-            if (pauseScreen.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (optionsPanel.activeInHierarchy)
             {
-                Pause(false);
+                CloseOptions();
             }
-            else
-            {
-                Pause(true);
+            else 
+            { 
+                if (pauseScreen.activeInHierarchy)
+                {
+                    Pause(false);
+                }
+                else
+                {
+                    Pause(true);
+                }
             }
         }
     }
@@ -38,14 +50,29 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void OpenOptions()
+    {
+        pauseScreen.SetActive(false);   
+        optionsPanel.SetActive(true);   
+        //Time.timeScale = 0;            
+    }
+
+    public void CloseOptions()
+    {
+        optionsPanel.SetActive(false);
+        pauseScreen.SetActive(true);   
+        //Time.timeScale = 0;            
+    }
+
     public void Restart()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void MainMenu()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(mainMenuSceneName);
     }
 
     public void OnApplicationQuit()
