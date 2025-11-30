@@ -142,6 +142,7 @@ public class PlayerMove2D : MonoBehaviour
             else
             {
                 pushStaminaTimer = 0f;
+                m_animate.SetBool("pushing", false);
             }
         }
         else
@@ -226,13 +227,16 @@ public class PlayerMove2D : MonoBehaviour
         if (rb == null || rb.bodyType != RigidbodyType2D.Dynamic) return;
 
         Vector2 normal = col.GetContact(0).normal;
+        bool sideContact = Mathf.Abs(normal.x) > Mathf.Abs(normal.y);
+        bool hasInput = Mathf.Abs(horizontalInput) > 0.1f;
+        bool pushingTowardBox = Mathf.Sign(horizontalInput) == -Mathf.Sign(normal.x);
 
-        if (Mathf.Abs(normal.x) > Mathf.Abs(normal.y))
+        if (sideContact && hasInput && pushingTowardBox)
         {
             isPushing = true;
             pushingRb = rb;
         }
-        else
+        else if (col.rigidbody == pushingRb)
         {
             isPushing = false;
             pushingRb = null;
