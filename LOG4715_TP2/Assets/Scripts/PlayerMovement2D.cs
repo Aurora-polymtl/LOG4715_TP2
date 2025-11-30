@@ -25,10 +25,13 @@ public class PlayerMove2D : MonoBehaviour
     private bool isPushing;
     private Knockback knockback;
     private float playerInitialMass;
+    private float horizontalInput;
+    private bool isWallJumping;
     [SerializeField] private Vector2 wallJumpPower = new Vector2(6f, 10f);
     [SerializeField] private float wallJumpDuration = 0.2f;
     [SerializeField] private TrailRenderer dashTrail;
-    private bool isWallJumping;
+    [SerializeField] private float pushStaminaInterval = 0.3f; // temps entre deux coûts de push
+    private float pushStaminaTimer;
 
     private void Awake()
     {
@@ -52,32 +55,12 @@ public class PlayerMove2D : MonoBehaviour
 
         if (!isWallJumping)
         {
-            float horizontalInput = Input.GetAxis("Horizontal");
+            horizontalInput = Input.GetAxis("Horizontal");
 
             if (isGrounded() && playerStamina.currentStamina < playerStamina.startingStamina && !isPushing)
             {
                 playerStamina.Regenerate();
                 m_Rigidbody2D.mass = playerInitialMass;
-            }
-
-            if (isPushing && Mathf.Abs(horizontalInput) > 0.1f && pushingRb != null)
-            {
-                m_animate.SetBool("pushing", true);
-                float dir = Mathf.Sign(horizontalInput);
-                float objVxAlongPush = pushingRb.linearVelocity.x * dir;
-
-                if (objVxAlongPush > 0.01f)
-                {
-                    if (!playerStamina.Consume(Stamina.PlayerAction.PushObjet))
-                    {
-                        m_animate.SetBool("pushing", false);
-                        m_Rigidbody2D.mass = 0.01f;
-                    }
-                }
-            }
-            else
-            {
-                m_animate.SetBool("pushing", false);
             }
 
             if (!knockback.IsBeingKnockedBack)
@@ -131,6 +114,41 @@ public class PlayerMove2D : MonoBehaviour
             }
         }
         m_Rigidbody2D.gravityScale = 3;
+    }
+
+    private void FixedUpdate()
+    {
+        if (isPushing && Mathf.Abs(horizontalInput) > 0.1f && pushingRb != null)
+        {
+            m_animate.SetBool("pushing", true);
+            float dir = Mathf.Sign(horizontalInput);
+            float objVxAlongPush = pushingRb.linearVelocity.x * dir;
+
+            if (objVxAlongPush > 0.01f)
+            {
+                pushStaminaTimer += Time.fixedDeltaTime;
+
+                if (pushStaminaTimer >= pushStaminaInterval)
+                {
+                    pushStaminaTimer = 0f;
+
+                    if (!playerStamina.Consume(Stamina.PlayerAction.PushObjet))
+                    {
+                        m_animate.SetBool("pushing", false);
+                        m_Rigidbody2D.mass = 0.01f;
+                    }
+                }
+            }
+            else
+            {
+                pushStaminaTimer = 0f;
+            }
+        }
+        else
+        {
+            m_animate.SetBool("pushing", false);
+            pushStaminaTimer = 0f;
+        }
     }
 
     private void Jump()

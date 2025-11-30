@@ -18,7 +18,7 @@ public class Stamina : MonoBehaviour
     {
         { PlayerAction.WallJump, 0.15f },
         { PlayerAction.Dash, 5f },
-        { PlayerAction.PushObjet, 0.1f}
+        { PlayerAction.PushObjet, 1.5f}
     };
 
     private void Awake()
