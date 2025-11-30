@@ -14,7 +14,7 @@ public class PlayerMove2D : MonoBehaviour
     private bool isSlidingOnWall;
     private Rigidbody2D m_Rigidbody2D;
     private Animator m_animate;
-    private PolygonCollider2D m_Collider;
+    private Collider2D m_Collider;
     private bool canDash;
     private bool isDashing;
     private float dashingPower = 22f;
@@ -30,14 +30,14 @@ public class PlayerMove2D : MonoBehaviour
     [SerializeField] private Vector2 wallJumpPower = new Vector2(6f, 10f);
     [SerializeField] private float wallJumpDuration = 0.2f;
     [SerializeField] private TrailRenderer dashTrail;
-    [SerializeField] private float pushStaminaInterval = 0.3f; // temps entre deux coûts de push
+    [SerializeField] private float pushStaminaInterval = 0.3f; // temps entre deux coï¿½ts de push
     private float pushStaminaTimer;
 
     private void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_animate = GetComponent<Animator>();
-        m_Collider = GetComponent<PolygonCollider2D>();
+        m_Collider = GetComponent<Collider2D>();
         canDash = true;
         playerStamina = GetComponent<Stamina>();
         playerSpeed = GetComponent<Speed>();
@@ -259,7 +259,6 @@ public class PlayerMove2D : MonoBehaviour
 
     public bool IsPlayerIdle()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
         return Mathf.Abs(horizontalInput) < 0.01f && isGrounded();
     }
 }

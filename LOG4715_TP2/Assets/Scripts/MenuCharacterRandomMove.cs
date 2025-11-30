@@ -13,7 +13,7 @@ public class MenuCharacterRandomMove : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator animator;
-    private BoxCollider2D col;
+    private Collider2D col;
 
     private bool isGrounded;
     private bool isWallSliding;
@@ -24,7 +24,7 @@ public class MenuCharacterRandomMove : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        col = GetComponent<BoxCollider2D>();
+        col = GetComponent<Collider2D>();
     }
 
     private void Start()
