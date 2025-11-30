@@ -2328,7 +2328,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 10.303067, y: 0.94018936}
+    - - {x: 10.314, y: 1.3501701}
+      - {x: 9.266411, y: 1.3436298}
+      - {x: 8.164017, y: 1.3431282}
+      - {x: 7.2724, y: 1.3565254}
       - {x: -10.81203, y: 1.003191}
       - {x: -13.83114, y: 1.0057087}
       - {x: -13.865713, y: -10.5}
@@ -15853,7 +15856,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4929255832355712, guid: 9988f0506db942945b6cf9bd5daeb06c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.44
+      value: -0.92
       objectReference: {fileID: 0}
     - target: {fileID: 4929255832355712, guid: 9988f0506db942945b6cf9bd5daeb06c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -27141,7 +27144,8 @@ PolygonCollider2D:
     m_Paths:
     - - {x: 10.3, y: 5}
       - {x: -13.65, y: 5}
-      - {x: -13.65, y: -10.347292}
+      - {x: -13.587374, y: -9.55551}
+      - {x: -10.595833, y: -9.552547}
       - {x: 10.269456, y: -10.347294}
   m_UseDelaunayMesh: 0
 --- !u!4 &2109698711
