@@ -3627,8 +3627,8 @@ CompositeCollider2D:
       - {x: 34, y: 17.625}
       - {x: 34.0625, y: 17.5625}
       - {x: 35.9375, y: 17.5625}
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
+  m_VertexDistance: 0.05
+  m_OffsetDistance: 0
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 870094108}
 --- !u!50 &870094112
