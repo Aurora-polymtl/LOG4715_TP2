@@ -21838,6 +21838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuSceneName: MenuScene
+  victorySound: {fileID: 8300000, guid: f35c7e1426159eb4cb31b7be68bd35f8, type: 3}
 --- !u!61 &1828833982
 BoxCollider2D:
   m_ObjectHideFlags: 0
