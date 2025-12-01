@@ -55,6 +55,9 @@ TagManager:
   - name: Fireball
     uniqueID: 3475140429
     locked: 0
+  - name: Props
+    uniqueID: 799870449
+    locked: 0
   - name: Player
     uniqueID: 489070299
     locked: 0
