@@ -76,6 +76,9 @@ public class Health : MonoBehaviour
         if (dead) return;
         dead = true;
 
+        var speed = GetComponent<Speed>();
+        if (speed != null) speed.ResetFragments();
+
         var controller = GetComponent<PlayerMove2D>();
         if (controller) controller.enabled = false;
 

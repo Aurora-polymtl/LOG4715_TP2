@@ -54,4 +54,10 @@ public class Speed : MonoBehaviour
         PowerUpManager.Instance.RespawnAll();
         isRespawning = false;
     }
+    
+    public void ResetFragments()
+    {
+        nSpeedPowerUpPickedUp = 0;
+        PowerUpManager.Instance.RespawnAll();
+    }
 }
