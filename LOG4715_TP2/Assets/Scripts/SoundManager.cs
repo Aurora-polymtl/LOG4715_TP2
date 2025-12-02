@@ -19,8 +19,8 @@ public class SoundManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             musicSource = musicObject.GetComponent<AudioSource>();
             musicSource.loop = true;
-            MusicVolume = PlayerPrefs.GetFloat("musicVolume", 1f);
-            SoundVolume = PlayerPrefs.GetFloat("soundVolume", 1f);
+            MusicVolume = PlayerPrefs.GetFloat("music", 0.08f);
+            SoundVolume = PlayerPrefs.GetFloat("soundVolume", 0.08f);
 
             musicSource.volume = MusicVolume;
             source.volume = SoundVolume;
@@ -49,7 +49,7 @@ public class SoundManager : MonoBehaviour
     {
         MusicVolume = value;
         musicSource.volume = value;
-        PlayerPrefs.SetFloat("musicVolume", value);
+        PlayerPrefs.SetFloat("music", value);
     }
 
     public void SetSoundVolume(float value)
