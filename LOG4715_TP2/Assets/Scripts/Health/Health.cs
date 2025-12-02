@@ -10,7 +10,8 @@ public class Health : MonoBehaviour
 
     Animator anim;
     Knockback knockback;
-    RespawnController respawnController;
+    RespawnController respawnPlayerController;
+    RespawnManager respawnObjectController;
     [Header("Death Movement Delay")]
     [SerializeField]
     [Tooltip("Seconds to disable player movement after dying")]
@@ -29,7 +30,8 @@ public class Health : MonoBehaviour
         currentHealth = healthStart;
         anim = GetComponent<Animator>();
         knockback = GetComponent<Knockback>();
-        respawnController = RespawnController.instance;
+        respawnPlayerController = RespawnController.instance;
+        respawnObjectController = RespawnManager.instance;
         IsInvulnerable = false;
     }
 
@@ -76,6 +78,8 @@ public class Health : MonoBehaviour
         if (dead) return;
         dead = true;
 
+        if (respawnObjectController != null) respawnObjectController.RespawnAll();
+
         var speed = GetComponent<Speed>();
         if (speed != null) speed.ResetFragments();
 
@@ -93,13 +97,13 @@ public class Health : MonoBehaviour
             }
             else
             {
-                if (respawnController != null) respawnController.RespawnPlayer();
+                if (respawnPlayerController != null) respawnPlayerController.RespawnPlayer();
             }
         }
         else
         {
             currentHealth = healthStart;
-            if (respawnController != null) respawnController.RespawnPlayer();
+            if (respawnPlayerController != null) respawnPlayerController.RespawnPlayer();
         }
         anim.Play("Idle", 0, 0f);
 
