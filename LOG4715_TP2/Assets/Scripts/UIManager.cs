@@ -77,6 +77,7 @@ public class UIManager : MonoBehaviour
 
     public void OnApplicationQuit()
     {
+        Debug.Log("Quitter le jeu !");
         Application.Quit();
     }
 }
