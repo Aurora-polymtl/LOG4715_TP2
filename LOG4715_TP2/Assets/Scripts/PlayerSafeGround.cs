@@ -43,8 +43,6 @@ public class PlayerSafeGround : MonoBehaviour
 
         playerLayer = LayerMask.NameToLayer(playerLayerName);
         hazardLayerIdx = LayerMask.NameToLayer(hazardLayerName);
-        if (playerLayer == -1) Debug.LogWarning($"[PlayerSafeGround] Layer '{playerLayerName}' introuvable.");
-        if (hazardLayerIdx == -1) Debug.LogWarning($"[PlayerSafeGround] Layer '{hazardLayerName}' introuvable.");
     }
 
     void FixedUpdate()

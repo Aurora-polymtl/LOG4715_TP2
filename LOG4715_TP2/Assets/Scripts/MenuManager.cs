@@ -23,7 +23,6 @@ public class MenuManager : MonoBehaviour
     // Appelé par le bouton Quitter
     public void QuitGame()
     {
-        Debug.Log("Quitter le jeu !"); // utile pour tester dans l'éditeur
         Application.Quit();
     }
 

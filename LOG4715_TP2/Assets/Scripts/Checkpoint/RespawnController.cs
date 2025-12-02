@@ -17,7 +17,6 @@ public class RespawnController : MonoBehaviour
 
         if (player == null || respawnPoint == null)
         {
-            Debug.LogError("[RespawnController] Player ou respawnPoint manquant.");
             return;
         }
         RespawnPlayer(player);
