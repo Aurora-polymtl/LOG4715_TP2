@@ -6,6 +6,8 @@ public class SoundManager : MonoBehaviour
     private AudioSource source;
     [SerializeField] private GameObject musicObject;
     private AudioSource musicSource;
+    [SerializeField] private float musicBaseMultiplier = 0.3f;
+    [SerializeField] private float soundBaseMultiplier = 0.6f;
 
     public float MusicVolume { get; private set; }
     public float SoundVolume { get; private set; }
@@ -22,8 +24,8 @@ public class SoundManager : MonoBehaviour
             MusicVolume = PlayerPrefs.GetFloat("music", 0.08f);
             SoundVolume = PlayerPrefs.GetFloat("soundVolume", 0.08f);
 
-            musicSource.volume = MusicVolume;
-            source.volume = SoundVolume;
+            musicSource.volume = MusicVolume * musicBaseMultiplier;
+            source.volume = SoundVolume * soundBaseMultiplier;
         }
         else if (instance != null && instance != this)
         {
@@ -48,14 +50,14 @@ public class SoundManager : MonoBehaviour
     public void SetMusicVolume(float value)
     {
         MusicVolume = value;
-        musicSource.volume = value;
+        musicSource.volume = value * musicBaseMultiplier;
         PlayerPrefs.SetFloat("music", value);
     }
 
     public void SetSoundVolume(float value)
     {
         SoundVolume = value;
-        source.volume = value;
+        source.volume = value * soundBaseMultiplier;
         PlayerPrefs.SetFloat("soundVolume", value);
     }
 }
