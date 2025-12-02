@@ -154,8 +154,6 @@ public class PlayerMove2D : MonoBehaviour
 
     private void Jump()
     {
-        bool isRunning = playerSpeed.currentSpeed > 0f;
-        float velocity = m_JumpForce * (isRunning ? 1.5f : 1f);
         m_Rigidbody2D.linearVelocity = new Vector2(m_Rigidbody2D.linearVelocity.x, m_JumpForce);
         m_animate.SetTrigger("jump");
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded())
