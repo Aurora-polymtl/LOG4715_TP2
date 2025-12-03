@@ -39,7 +39,7 @@ public class MovingPlatform : MonoBehaviour
                 break;
 
             case MovementType.VerticalLongWall:
-                transform.position = startPos + (Vector3)upDirection.normalized * Mathf.Cos((Time.time + timeOffset) * speed * 0.75f) * (verticalDistance * 1.75f);
+                transform.position = startPos + (Vector3)upDirection.normalized * Mathf.Cos((Time.time + timeOffset) * speed * 0.75f) * (verticalDistance * 1.65f);
                 break;
 
             case MovementType.ZigZag:
