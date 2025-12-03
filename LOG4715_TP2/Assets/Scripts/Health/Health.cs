@@ -95,7 +95,7 @@ public class Health : MonoBehaviour
             var safe = GetComponent<PlayerSafeGround>();
             if (safe != null)
             {
-                safe.TeleportToLastSafe(ignoreHazard: true, ignoreDuration: 0.6f);
+                safe.teleportToRoomStart(ignoreHazard: true, ignoreDuration: 0.6f);
             }
             else
             {

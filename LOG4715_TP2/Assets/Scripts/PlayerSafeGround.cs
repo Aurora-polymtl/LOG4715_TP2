@@ -95,6 +95,25 @@ public class PlayerSafeGround : MonoBehaviour
         TeleportTo(lastSafePos + new Vector2(xOff, teleportYOffset), ignoreHazard, ignoreDuration);
     }
 
+    public void teleportToRoomStart(bool ignoreHazard = true, float ignoreDuration = 0.6f)
+    {
+        // 1. HARDCODE : On cherche l'objet par son nom exact dans la scène
+        GameObject targetObj = GameObject.Find("respawn hasard");
+
+        if (targetObj != null)
+        {
+            // 2. Si on le trouve, on se téléporte directement à sa position
+            TeleportTo(targetObj.transform.position, ignoreHazard: false);
+        }
+        // else
+        // {
+        //     // 3. Sécurité : Si l'objet n'existe pas ou est mal nommé, on garde l'ancien comportement pour ne pas bloquer le jeu
+        //     Debug.LogWarning("Attention : L'objet 'respawn hasard' est introuvable dans la scène !");
+        //     Vector2 target = roomStartPos + new Vector2(teleportXOffset, teleportYOffset);
+        //     TeleportTo(target, ignoreHazard: false);
+        // }
+    }
+
     private IEnumerator DoTeleport(Vector2 target, float ignoreDuration)
     {
         IsInvulnerable = ignoreDuration > 0f;
