@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    public enum MovementType { Linear, ZigZag, Circular, Vertical }
+    public enum MovementType { Linear, ZigZag, Circular, Vertical, VerticalLongWall }
 
     [SerializeField] private MovementType movementType = MovementType.Linear;
     [SerializeField] private float speed = 2f;
@@ -36,6 +36,10 @@ public class MovingPlatform : MonoBehaviour
 
             case MovementType.Vertical:
                 transform.position = startPos + (Vector3)upDirection.normalized * Mathf.Cos((Time.time + timeOffset) * speed) * (verticalDistance);
+                break;
+
+            case MovementType.VerticalLongWall:
+                transform.position = startPos + (Vector3)upDirection.normalized * Mathf.Cos((Time.time + timeOffset) * speed * 0.75f) * (verticalDistance * 1.75f);
                 break;
 
             case MovementType.ZigZag:
