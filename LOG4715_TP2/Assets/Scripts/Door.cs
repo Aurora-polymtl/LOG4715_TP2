@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class door : MonoBehaviour
+public class door : MonoBehaviour, IResettable
 {
     private Collider2D doorCollider;
     private Rigidbody2D doorBody;
     private SpriteRenderer doorRenderer;
     [SerializeField] private AudioClip doorSound;
+    private bool initialColliderEnabled;
+    private bool initialSimulated;
+    private bool initialVisible;
 
     void Awake()
     {
@@ -15,6 +18,10 @@ public class door : MonoBehaviour
 
         // Récupère le SpriteRenderer dans l'objet enfant
         doorRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        initialColliderEnabled = doorCollider.enabled;
+        initialSimulated = doorBody.simulated;
+        initialVisible = doorRenderer.enabled;
     }
 
     public void OpenDoor()
@@ -42,6 +49,12 @@ public class door : MonoBehaviour
 
         if (doorRenderer != null)
             doorRenderer.enabled = true;
+    }
 
+    public void ResetState()
+    {
+        doorCollider.enabled = initialColliderEnabled;
+        doorBody.simulated = initialSimulated;
+        doorRenderer.enabled = initialVisible;
     }
 }

@@ -6,7 +6,7 @@ public enum LeverState
     Left, Center, Right
 }
 
-public class Lever : MonoBehaviour
+public class Lever : MonoBehaviour, IResettable
 {
     [Header("Sprites")]
     public Sprite lever_center;
@@ -21,12 +21,14 @@ public class Lever : MonoBehaviour
     private bool canActivate = false;
     private float cooldown = 0f;
     [SerializeField] private AudioClip playerLeverSound;
+    private LeverState initialState;
 
     public UnityEvent OnTriggerLever;
 
     private void Awake()
     {
         render = GetComponent<SpriteRenderer>();
+        initialState = state;
     }
 
     void Start()
@@ -104,5 +106,12 @@ public class Lever : MonoBehaviour
                 render.sprite = lever_right;
                 break;
         }
+    }
+
+    public void ResetState()
+    {
+        state = initialState;
+        prev_state = initialState;
+        ChangeSprite();
     }
 }

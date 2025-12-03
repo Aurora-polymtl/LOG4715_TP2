@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
     Knockback knockback;
     RespawnController respawnPlayerController;
     RespawnManager respawnObjectController;
+    ResetObjectStateManager resetObjectStateController;
     [Header("Death Movement Delay")]
     [SerializeField]
     [Tooltip("Seconds to disable player movement after dying")]
@@ -32,6 +33,7 @@ public class Health : MonoBehaviour
         knockback = GetComponent<Knockback>();
         respawnPlayerController = RespawnController.instance;
         respawnObjectController = RespawnManager.instance;
+        resetObjectStateController = ResetObjectStateManager.instance;
         IsInvulnerable = false;
     }
 
@@ -79,6 +81,7 @@ public class Health : MonoBehaviour
         dead = true;
 
         if (respawnObjectController != null) respawnObjectController.RespawnAll();
+        if (resetObjectStateController != null) resetObjectStateController.ResetAll();
 
         var speed = GetComponent<Speed>();
         if (speed != null) speed.ResetFragments();
@@ -92,7 +95,6 @@ public class Health : MonoBehaviour
             var safe = GetComponent<PlayerSafeGround>();
             if (safe != null)
             {
-                print("Teleporting to last safe ground.");
                 safe.TeleportToLastSafe(ignoreHazard: true, ignoreDuration: 0.6f);
             }
             else
